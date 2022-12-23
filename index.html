@@ -71,6 +71,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="past-XFF和Referer" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/12/23/XFF%E5%92%8CReferer/" class="article-date">
+  <time class="dt-published" datetime="2022-12-23T10:30:38.000Z" itemprop="datePublished">2022-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/12/23/XFF%E5%92%8CReferer/">XFF和Referer</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>关于xff和referer：</p>
+<p>X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。</p>
+<p>HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。简单地说，xff是告诉服务器当前请求者的最终ip的http请求头字段通常可以直接通过修改http头中的X-Forwarded-For字段来仿造请求的最终ip</p>
+<p>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>也就是说：</p>
+<p>xff 是http的拓展头部，作用是使Web服务器获取访问用户的IP真实地址（可伪造）。由于很多用户通过代理服务器进行访问，服务器只能获取代理服务器的IP地址，而xff的作用在于记录用户的真实IP，以及代理服务器的IP。</p>
+<p>格式为：X-Forwarded-For: 本机IP, 代理1IP, 代理2IP, 代理2IP</p>
+<p>referer 是http的拓展头部，作用是记录当前请求页面的来源页面的地址。服务器使用referer确认访问来源，如果referer内容不符合要求，服务器可以拦截或者重定向请求。<br>————————————————<br>即：XFF构造来源IP，Referer构造来源浏览器！</p>
+<p>提取的解题方法：<br>用抓包软件burpsuit进行抓包，<br>在包里直接添加<br>&#x2F;&#x2F;X-Forwarded-For:IP名<br>&#x2F;&#x2F;Referer:地址<br>（同时在包里）<br>发送即可！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc0dmyfi0003m8ai2cxxcjfp" data-title="XFF和Referer" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="past-php伪协议" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="article-date">
@@ -100,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc0cw4er00000gai1e3701e9" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc0dmyff0001m8aifcs45nqh" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -167,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc0cw4ex00030gai4vg93uc2" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc0dmyfh0002m8aiat0s0nwg" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
@@ -211,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc0cw4ev00010gaidguh4ze0" data-title="URL与网址" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc0dmyfi0004m8ai1goq3hqw" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
@@ -250,7 +296,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc0cw4ew00020gaietu43ex8" data-title="A Grand Trial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc0dmyfb0000m8ai5rieaju3" data-title="A Grand Trial" class="article-share-link">Share</a>
       
       
       
@@ -291,6 +337,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/12/23/XFF%E5%92%8CReferer/">XFF和Referer</a>
+          </li>
         
           <li>
             <a href="/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
