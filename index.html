@@ -100,12 +100,12 @@
 <p>xff 是http的拓展头部，作用是使Web服务器获取访问用户的IP真实地址（可伪造）。由于很多用户通过代理服务器进行访问，服务器只能获取代理服务器的IP地址，而xff的作用在于记录用户的真实IP，以及代理服务器的IP。</p>
 <p>格式为：X-Forwarded-For: 本机IP, 代理1IP, 代理2IP, 代理2IP</p>
 <p>referer 是http的拓展头部，作用是记录当前请求页面的来源页面的地址。服务器使用referer确认访问来源，如果referer内容不符合要求，服务器可以拦截或者重定向请求。<br>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>即：XFF构造来源IP，Referer构造来源浏览器！</p>
-<p>提取的解题方法：<br>用抓包软件burpsuit进行抓包，<br>在包里直接添加<br>&#x2F;&#x2F;X-Forwarded-For:IP名<br>&#x2F;&#x2F;Referer:地址<br>（同时在包里）<br>发送即可！</p>
+<p>提取的解题方法：<br>用抓包软件burpsuit进行抓包，<br>在包里直接添加<br>X-Forwarded-For:IP名<br>Referer:地址<br>（同时在包里）<br>发送即可！</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc0do2ur0003sgaigb714zeb" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc0dr2s00004ikaielk53on7" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -146,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc0do2us0004sgaihnxh2w2j" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc0dr2rt0001ikai0eu4hplp" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -180,7 +180,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>18.2 什么是机器人排除标准</p>
+        <p>什么是机器人排除标准</p>
 <p>根据前面的介绍，确实有必要对爬虫的行为做出一定的限制。这种限制称为机器人排除标准(robot exclusion standard)或是机器人排除协议(robot exclusion protocol)，或是robot.txt。</p>
 <p>这些东西的本质就是robot.txt 文件。这个文本文件应该放在网站的根目录下，其中就说明了网站中的哪些网页是爬虫不能索引的。</p>
 <p>需要使用特定的语法才能使爬虫理解文件中的含义。这个文本文件的基本形式如下：</p>
@@ -213,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc0do2uo0001sgaiakm2dew8" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc0dr2rv0002ikai1xkvdbzn" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
@@ -257,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc0do2ul0000sgai31m43k24" data-title="URL与网址" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc0dr2rp0000ikaidqjgg96q" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
@@ -296,7 +296,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc0do2uq0002sgaibwnobkbt" data-title="A Grand Trial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc0dr2rz0003ikai5roz3pa9" data-title="A Grand Trial" class="article-share-link">Share</a>
       
       
       
