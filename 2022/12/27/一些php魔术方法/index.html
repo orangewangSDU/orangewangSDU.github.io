@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>php伪协议 | Orange Wang的博客</title>
+  <title>一些php魔术方法（unserilize3题解附） | Orange Wang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="php伪协议：说明：php内预封装的协议，使用可以绕过一些语法。一、input1.作用：执行命令2.使用方式：变量&#x3D;php:&#x2F;&#x2F;input 抓包后，post想运行的语句3.应用场景：文件包含 二、file1.作用：用于访问服务端本地文件2.使用方式：变量&#x3D;file:&#x2F;&#x2F;文件地址3.应用场景：文件包含 三、filter1.作用：查看源代码，">
+  <meta name="description" content="我们了解一下一些php魔术方法  __construct()， __destruct()， __call()， __callStatic()， __get()， __set()， __isset()， __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()， __clone() 和 __debugInfo(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php伪协议">
-<meta property="og:url" content="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:title" content="一些php魔术方法（unserilize3题解附）">
+<meta property="og:url" content="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Orange Wang的博客">
-<meta property="og:description" content="php伪协议：说明：php内预封装的协议，使用可以绕过一些语法。一、input1.作用：执行命令2.使用方式：变量&#x3D;php:&#x2F;&#x2F;input 抓包后，post想运行的语句3.应用场景：文件包含 二、file1.作用：用于访问服务端本地文件2.使用方式：变量&#x3D;file:&#x2F;&#x2F;文件地址3.应用场景：文件包含 三、filter1.作用：查看源代码，">
+<meta property="og:description" content="我们了解一下一些php魔术方法  __construct()， __destruct()， __call()， __callStatic()， __get()， __set()， __isset()， __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()， __clone() 和 __debugInfo(">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-12-23T10:12:08.000Z">
-<meta property="article:modified_time" content="2022-12-23T10:14:03.656Z">
+<meta property="article:published_time" content="2022-12-27T11:03:08.000Z">
+<meta property="article:modified_time" content="2022-12-27T11:08:08.249Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +73,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="past-php伪协议" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="past-一些php魔术方法" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="article-date">
-  <time class="dt-published" datetime="2022-12-23T10:12:08.000Z" itemprop="datePublished">2022-12-23</time>
+    <a href="/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2022-12-27T11:03:08.000Z" itemprop="datePublished">2022-12-27</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      php伪协议
+      一些php魔术方法（unserilize3题解附）
     </h1>
   
 
@@ -95,14 +95,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>php伪协议：<br>说明：php内预封装的协议，使用可以绕过一些语法。<br>一、input<br>1.作用：执行命令<br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;input 抓包后，post想运行的语句<br>3.应用场景：文件包含</p>
-<p>二、file<br>1.作用：用于访问服务端本地文件<br>2.使用方式：变量&#x3D;file:&#x2F;&#x2F;文件地址<br>3.应用场景：文件包含</p>
-<p>三、filter<br>1.作用：查看源代码，可以寻找flag，或进行绕过<br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64&#x2F;resourse&#x3D;文件名<br>resource&#x3D;&lt;要过滤的数据流&gt; 这个参数是必须的。它指定了你要筛选过滤的数据流。<br>read&#x3D;&lt;读链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>write&#x3D;&lt;写链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>&lt;；两个链的筛选列表&gt; 任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。<br>3.应用场景：文件包含</p>
+        <p>我们了解一下一些php魔术方法</p>
+<ul>
+<li>__construct()， __destruct()， __call()， __callStatic()， __get()， __set()， __isset()， __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()， __clone() 和 __debugInfo() 等方法在 PHP 中被称为魔术方法（Magic methods）。在命名自己的类方法时不能使用这些方法名，除非是想使用其魔术功能</li>
+<li>注意：PHP 将所有以 __（两个下划线）开头的类方法保留为魔术方法。所以在定义类方法时，除了上述魔术方法，建议不要以 __ 为前缀。</li>
+<li>__sleep() 和 __wakeup()<br>public __sleep ( void ) : array<br>__wakeup ( void ) : void<br>serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组。如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误。<br>Note:<br>（1）__sleep() 不能返回父类的私有成员的名字。这样做会产生一个 E_NOTICE 级别的错误。可以用 Serializable 接口来替代。<br>（2）__sleep() 方法常用于提交未提交的数据，或类似的清理操作。同时，如果有一些很大的对象，但不需要全部保存，这个功能就很好用。<br>（3）与之相反，unserialize() 会检查是否存在一个 __wakeup() 方法。如果存在，则会先调用 __wakeup 方法，预先准备对象需要的资源。<br>（4）__wakeup() 经常用在反序列化操作中，例如重新建立数据库连接，或执行其它初始化操作。</li>
+<li>访问控制<br>PHP 对属性或方法的访问控制，是通过在前面添加关键字 public（公有），protected（受保护）或 private（私有）来实现的。<br>public（公有）：公有的类成员可以在任何地方被访问。<br>protected（受保护）：受保护的类成员则可以被其自身以及其子类和父类访问。<br>private（私有）：私有的类成员则只能被其定义所在的类访问。</li>
+<li>unserialize() 将已序列化的字符串还原回 PHP 的值。<br>序列化请使用 serialize() 函数。<br>语法<br>unserialize(str)<br>参数 描述<br>str 必需。一个序列化字符串。<br>__wakeup()是用在反序列化操作中。unserialize()会检查存在一个__wakeup()方法。如果存在，则先会调用__wakeup()方法。</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc64kho30003l8aiag333s5k" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clc64kho30004l8aiauu3fu0g" data-title="一些php魔术方法（unserilize3题解附）" class="article-share-link">Share</a>
       
       
       
@@ -112,19 +117,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/12/23/XFF%E5%92%8CReferer/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          XFF和Referer
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">机器人排除标准（robot exclusion standard)</div>
+      <div class="article-nav-title">攻防世界unserilize3题解及一些知识点</div>
     </a>
   
 </nav>

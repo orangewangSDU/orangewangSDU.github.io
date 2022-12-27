@@ -71,6 +71,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="past-一些php魔术方法" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2022-12-27T11:03:08.000Z" itemprop="datePublished">2022-12-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/">一些php魔术方法（unserilize3题解附）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我们了解一下一些php魔术方法</p>
+<ul>
+<li>__construct()， __destruct()， __call()， __callStatic()， __get()， __set()， __isset()， __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()， __clone() 和 __debugInfo() 等方法在 PHP 中被称为魔术方法（Magic methods）。在命名自己的类方法时不能使用这些方法名，除非是想使用其魔术功能</li>
+<li>注意：PHP 将所有以 __（两个下划线）开头的类方法保留为魔术方法。所以在定义类方法时，除了上述魔术方法，建议不要以 __ 为前缀。</li>
+<li>__sleep() 和 __wakeup()<br>public __sleep ( void ) : array<br>__wakeup ( void ) : void<br>serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组。如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误。<br>Note:<br>（1）__sleep() 不能返回父类的私有成员的名字。这样做会产生一个 E_NOTICE 级别的错误。可以用 Serializable 接口来替代。<br>（2）__sleep() 方法常用于提交未提交的数据，或类似的清理操作。同时，如果有一些很大的对象，但不需要全部保存，这个功能就很好用。<br>（3）与之相反，unserialize() 会检查是否存在一个 __wakeup() 方法。如果存在，则会先调用 __wakeup 方法，预先准备对象需要的资源。<br>（4）__wakeup() 经常用在反序列化操作中，例如重新建立数据库连接，或执行其它初始化操作。</li>
+<li>访问控制<br>PHP 对属性或方法的访问控制，是通过在前面添加关键字 public（公有），protected（受保护）或 private（私有）来实现的。<br>public（公有）：公有的类成员可以在任何地方被访问。<br>protected（受保护）：受保护的类成员则可以被其自身以及其子类和父类访问。<br>private（私有）：私有的类成员则只能被其定义所在的类访问。</li>
+<li>unserialize() 将已序列化的字符串还原回 PHP 的值。<br>序列化请使用 serialize() 函数。<br>语法<br>unserialize(str)<br>参数 描述<br>str 必需。一个序列化字符串。<br>__wakeup()是用在反序列化操作中。unserialize()会检查存在一个__wakeup()方法。如果存在，则先会调用__wakeup()方法。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clc64kho30004l8aiauu3fu0g" data-title="一些php魔术方法（unserilize3题解附）" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="past-攻防世界unserilize3题解及一些知识点" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
@@ -104,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clc648h4b0003ocai06u8h3jk" data-title="攻防世界unserilize3题解及一些知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clc64kho40005l8ai0lol8o6j" data-title="攻防世界unserilize3题解及一些知识点" class="article-share-link">Share</a>
       
       
       
@@ -150,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc648h420000ocai0kob1m6i" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc64kho20002l8aih03l5xk5" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -191,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc648h4c0005ocai2vmie79q" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc64kho30003l8aiag333s5k" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -258,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc648h4c0004ocai9z0u4v21" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc64kho50006l8aiejfdcium" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
@@ -302,7 +348,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc648h4a0002ocai74vg8z63" data-title="URL与网址" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc64kho00001l8ai5xe7cs68" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
@@ -341,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc648h490001ocai6sp11bws" data-title="A Grand Trial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc64khnw0000l8aiax2099ao" data-title="A Grand Trial" class="article-share-link">Share</a>
       
       
       
@@ -384,6 +430,10 @@
       <ul>
         
           <li>
+            <a href="/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/">一些php魔术方法（unserilize3题解附）</a>
+          </li>
+        
+          <li>
             <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/">攻防世界unserilize3题解及一些知识点</a>
           </li>
         
@@ -397,10 +447,6 @@
         
           <li>
             <a href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/">机器人排除标准（robot exclusion standard)</a>
-          </li>
-        
-          <li>
-            <a href="/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/">URL与网址</a>
           </li>
         
       </ul>
