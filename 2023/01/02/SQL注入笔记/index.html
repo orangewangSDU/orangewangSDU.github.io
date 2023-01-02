@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SQL注入笔记 | Orange Wang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="下面是SQL注入学习过程中的笔记： 一些SQL语法 注释 -- （一个空格）后面的内容叫注释! #后面的内容叫注释！（可以没有空格）   列出所有数据库show databases; 查看某一个数据库里所有的表 先use 数据库名;告诉他们要查哪个数据库里的表，再show tables;; 或show tables from 数据库名 select函数基本用法 select now();显示当前时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入笔记">
+<meta property="og:url" content="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Orange Wang的博客">
+<meta property="og:description" content="下面是SQL注入学习过程中的笔记： 一些SQL语法 注释 -- （一个空格）后面的内容叫注释! #后面的内容叫注释！（可以没有空格）   列出所有数据库show databases; 查看某一个数据库里所有的表 先use 数据库名;告诉他们要查哪个数据库里的表，再show tables;; 或show tables from 数据库名 select函数基本用法 select now();显示当前时">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-02T14:32:53.000Z">
+<meta property="article:modified_time" content="2023-01-02T16:13:52.251Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Orange Wang的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Orange Wang的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="past-SQL注入笔记" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-01-02T14:32:53.000Z" itemprop="datePublished">2023-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SQL注入笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>下面是SQL注入学习过程中的笔记：</p>
+<h2 id="一些SQL语法"><a href="#一些SQL语法" class="headerlink" title="一些SQL语法"></a>一些SQL语法</h2><ol>
+<li>注释<ol>
+<li><code>-- （一个空格）</code>后面的内容叫注释!</li>
+<li><code>#</code>后面的内容叫注释！（可以没有空格）</li>
+</ol>
+</li>
+<li>列出所有数据库<br><code>show databases;</code></li>
+<li>查看某一个数据库里所有的表<br> 先<code>use 数据库名;</code>告诉他们要查哪个数据库里的表，再<code>show tables;</code>;<br> 或<code>show tables from 数据库名</code></li>
+<li>select函数基本用法<ol>
+<li><code>select now();</code>显示当前时间</li>
+<li><code>select database();</code>查看我们当前选择的是哪个库</li>
+<li><code>select version();</code>查看当前版本</li>
+<li><code>select user();</code>查看当前登录数据库的用户</li>
+<li><code>select @@datadir;</code>查看数据路径</li>
+<li><code>select @@basedir;</code>查看mysql安装路径</li>
+<li><code>select @@version_compile_os;</code>查看mysql安装的系统</li>
+</ol>
+</li>
+</ol>
+<h5 id="重点来啦！"><a href="#重点来啦！" class="headerlink" title="重点来啦！"></a>重点来啦！</h5><ol start="5">
+<li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<em>表示所有字段）<br>  （查具体字段就把</em>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
+<li>where条件<br>where相当于编程语言中的if<br>例：select user,host from mysql.user where user&#x3D;’root’;</li>
+<li>创建库<br><code>create database test charset utf8mb4;</code>创建一个名为test的数据库</li>
+<li>创建表<br>先<code>use test；</code><br>再<code>create table t1(id int);</code><br>效果为：在test数据库里创建一个名为t1的表，含有一个名为id的字段，数据类型为int</li>
+<li>删除表<br><code>drop table t1</code>   删除表t1</li>
+<li>给表添加字段<br><code>alter table 表名 add 字段名 数据类型</code><br>例：alter table t1 add name varchar(32);</li>
+<li>插入数据<br><code>insert into t1 values (1,&quot;张三&quot;),(2,&quot;李四&quot;),(3,&quot;王五&quot;)</code></li>
+</ol>
+<h2 id="GET型SQL注入漏洞是什么"><a href="#GET型SQL注入漏洞是什么" class="headerlink" title="GET型SQL注入漏洞是什么"></a>GET型SQL注入漏洞是什么</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
+<p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而#或– 的作用是注释掉后面的多余内容)</p>
+<p>提交，查看URL<br>通过注入语句修改查询条件<code>以获取隐藏信息</code><br>应注入<code>xxx&#39;-- </code>或<code>xxx&#39;#</code>来实现这一点</p>
+<p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcf0b9ah0000n4aibxyfdtlx" data-title="SQL注入笔记" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一些linux命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/">一些linux命令</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/">查看隐藏文件和文件分离</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/">流量追踪</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/">png文件结构及图片CRC相关</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

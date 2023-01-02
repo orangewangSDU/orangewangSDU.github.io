@@ -4,17 +4,13 @@
   <meta charset="utf-8">
   
   
-  <title>查看隐藏文件和文件分离 | Orange Wang的博客</title>
+  <title>Orange Wang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="2023.1.2 WP 新年新气象，跨年打比赛这感觉……装上虚拟机，用用新工具 题目：攻防世界simple_transfer 下载了一个pcap流量包文件用wireshark打开乱的一批，于是进行协议分级（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）对协议进行过滤，并未找到有用信息。看了WP，竟然是文件分离（摸不着头脑) 文件分离这里使用的是kali虚拟机，root下的操作…">
-<meta property="og:type" content="article">
-<meta property="og:title" content="查看隐藏文件和文件分离">
-<meta property="og:url" content="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Orange Wang的博客">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Orange Wang的博客">
-<meta property="og:description" content="2023.1.2 WP 新年新气象，跨年打比赛这感觉……装上虚拟机，用用新工具 题目：攻防世界simple_transfer 下载了一个pcap流量包文件用wireshark打开乱的一批，于是进行协议分级（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）对协议进行过滤，并未找到有用信息。看了WP，竟然是文件分离（摸不着头脑) 文件分离这里使用的是kali虚拟机，root下的操作…">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-01-02T09:57:44.000Z">
-<meta property="article:modified_time" content="2023-01-02T09:59:39.771Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +69,12 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="past-查看隐藏文件和文件分离" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main">
+  
+    <article id="past-URL与网址" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" class="article-date">
-  <time class="dt-published" datetime="2023-01-02T09:57:44.000Z" itemprop="datePublished">2023-01-02</time>
+    <a href="/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" class="article-date">
+  <time class="dt-published" datetime="2022-11-02T11:04:41.000Z" itemprop="datePublished">2022-11-02</time>
 </a>
     
   </div>
@@ -86,8 +84,8 @@
       <header class="article-header">
         
   
-    <h1 class="p-name article-title" itemprop="headline name">
-      查看隐藏文件和文件分离
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/">URL与网址</a>
     </h1>
   
 
@@ -95,49 +93,73 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>2023.1.2 WP</p>
-<p>新年新气象，跨年打比赛这感觉……<br>装上虚拟机，用用新工具</p>
-<p>题目：攻防世界simple_transfer</p>
-<p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑)</p>
-<h3 id="文件分离"><a href="#文件分离" class="headerlink" title="文件分离"></a>文件分离</h3><p>这里使用的是kali虚拟机，root下的操作……<br>命令：sudo su<br>输入密码即可进入root下！<br><code>foremost 文件名</code><br>（如果有隐藏文件的话会将其分离）</p>
-<h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件</p>
-<p><code>binwalk -e 文件名</code></p>
-<p>分离完出现了一个PDF文件，打开得到了flag</p>
-<p>(不知道出题人怎么想的）</p>
+        <p>从概念上对比</p>
+<p>URL，是Uniform Resource Location的缩写，译为“统一资源定位符”。通俗地说，URL是Internet上用来描述信息资源的字符串，主要用在各种WWW客户程序和服务器程序上，特别是著名的Mosaic。采用URL可以用一种统一的格式来描述各种信息资源，包括文件、服务器的地址和目录等。<br>网址，英文名：web site。在因特网中，如果要从一台计算机访问网上另一台计算机，就必须知道对方的网址。这里所说的网址实网址际上指两个内涵，即IP地址和域名地址。</p>
+<p>从结构上对比</p>
+<p>URL的格式由下列三部分组成：（以下面为例）<br><a target="_blank" rel="noopener" href="http://mail.163.com/index.html">http://mail.163.com/index.html</a><br>第一部分是协议（或称为服务方式）；<br>第二部分是存有该资源的主机IP地址（有时也包括端口号）；<br>第三部分是主机资源的具体地址。如目录和文件名等。<br>第一部分和第二部分之间用“：&#x2F;&#x2F;”符号隔开，第二部分和第三部分用“&#x2F;”符号隔开。第一部分和第二部分是不可缺少的，第三部分有时可以省略。</p>
+<p>网址的结构</p>
+<p>网址由两个或两个以上的词构成,中间由点号分隔开。最右边的那个词称为顶级域名。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcf0b9aq0008n4aieia2euxq" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clcf0b9al0001n4aifhyobgij" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          一些linux命令
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">流量追踪</div>
-    </a>
-  
-</nav>
+</article>
 
+
+
+  
+    <article id="past-AGrandTrial" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/11/02/AGrandTrial/" class="article-date">
+  <time class="dt-published" datetime="2022-11-02T10:32:11.000Z" itemprop="datePublished">2022-11-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/11/02/AGrandTrial/">A Grand Trial</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我的第一篇博客<br>一次伟大的尝试<br>致敬那个为了搭博客坚持到两点的夜晚<br>感谢过程中无私帮助我的隋彦希同学<br>也许以后还有很多个这样的夜晚<br>这只是一个开端<br>简，而不凡<br>over.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clcf0b9an0002n4aie5yxe3od" data-title="A Grand Trial" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
   
 </article>
 
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 </section>
         
