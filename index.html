@@ -106,7 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcen10gt0009mgai16pmftvh" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcenbv63000790ai0iis1grp" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
       
       
       
@@ -118,9 +118,9 @@
 
 
   
-    <article id="past-一些misc题目和涉及的知识点" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="past-流量追踪" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/12/30/%E4%B8%80%E4%BA%9Bmisc%E9%A2%98%E7%9B%AE%E5%92%8C%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
+    <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" class="article-date">
   <time class="dt-published" datetime="2022-12-30T12:17:09.000Z" itemprop="datePublished">2022-12-30</time>
 </a>
     
@@ -132,7 +132,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/12/30/%E4%B8%80%E4%BA%9Bmisc%E9%A2%98%E7%9B%AE%E5%92%8C%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/">一些misc题目和涉及的知识点</a>
+      <a class="p-name article-title" href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/">流量追踪</a>
     </h1>
   
 
@@ -140,12 +140,27 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="攻防世界Ditf"><a href="#攻防世界Ditf" class="headerlink" title="攻防世界Ditf"></a>攻防世界Ditf</h3><p>又是考察图片宽与高的……<br>用010editor手动<code>改高度</code>，发现字符串，但不是flag;<br>用010发现图片里藏着PK也就是压缩文件，改后缀，解压，发现需要密码。<br>上面的字符串就是密码！<br>解压后得到pcapng流量包文件，用wireshark打开<code>追踪流量</code><br>追踪http流，发现<code>base64编码</code>，解码即得flag!</p>
+        <p>以例题来了解流量追踪吧！</p>
+<h2 id="攻防世界Ditf"><a href="#攻防世界Ditf" class="headerlink" title="攻防世界Ditf"></a>攻防世界Ditf</h2><p>又是考察图片宽与高的……<br>用010editor手动<code>改高度</code>，发现字符串，但不是flag;<br>用010发现图片里藏着PK也就是压缩文件，改后缀，解压，发现需要密码。<br>上面的字符串就是密码！<br>解压后得到pcapng流量包文件，用wireshark打开<code>追踪流量</code><br>追踪http流，发现<code>base64编码</code>，解码即得flag!</p>
+<h3 id="数据流的追踪"><a href="#数据流的追踪" class="headerlink" title="数据流的追踪"></a>数据流的追踪</h3><blockquote>
+<p>我们的一个完整的数据流一般都是由很多个包组成的；<br>所以当我们想查看某条数据包对于的数据流的话。可以选中数据，右键选择追踪流；<br>里面就会有tcp流、udp流、ssl流、http流。数据包属于哪种流就选择对应的流；<br>当我们选择了追踪流时，会弹出该流的完整的数据流还有这个数据流中包含的数据包，对话框下面可以选择数据流方向，顶&gt;部的过滤器就是该流的过滤规则</p>
+</blockquote>
+<h3 id="数据包的统计分析"><a href="#数据包的统计分析" class="headerlink" title="数据包的统计分析"></a>数据包的统计分析</h3><blockquote>
+<p>统计中的协议分级功能可以查看所选包协议的分布情况，帮助识别可疑协议，和不正常的网络应用程序.<br>在Endpoints窗口中，可以通过排序Bytes和Tx Bytes来判断占用带宽最大的主机<br>Conversions窗口可以看到两个主机之间发送&#x2F;接收数据包的数量、字节大小以及数据的流向情况，也可以通过排序来判断占用最大带宽的主机；<br>在Conversions窗口中只能看到会话的统计情况，无法看到包的具体内容；<br>这时可以使用快速过滤会话功能，过滤出想要查看的内容；<br>快速过滤会话的功能在Conversions窗口中进行操作，可以对选中的会话或者非选中的会话选择数据流向进行过滤</p>
+</blockquote>
+<h3 id="数据包的大致结构"><a href="#数据包的大致结构" class="headerlink" title="数据包的大致结构"></a>数据包的大致结构</h3><ul>
+<li>第一行：数据包整体概述</li>
+<li>第二行：链路层详细信息，主要的是双方的mac地址</li>
+<li>第三行：网络层详细信息，主要的是双方的IP地址</li>
+<li>第四行：传输层的详细信息，主要的是双方的端口号</li>
+<li>第五行：TCP或UDP是传输的DATA，DNS这是域名的相关信息</li>
+</ul>
+<p>仅以自己的方式粗略总结，具体描述参见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116800657">https://blog.csdn.net/LYJ20010728/article/details/116800657</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/30/%E4%B8%80%E4%BA%9Bmisc%E9%A2%98%E7%9B%AE%E5%92%8C%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcen10gn0003mgai2xm4fgd4" data-title="一些misc题目和涉及的知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" data-id="clcenbv64000990ai5d1x3snc" data-title="流量追踪" class="article-share-link">Share</a>
       
       
       
@@ -188,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcen10go0004mgai3pdtevdx" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcenbv5z000390ai0sqqdbdk" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
       
       
       
@@ -234,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcen10gp0006mgai5s8556yt" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcenbv62000590aiemah6xfr" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
       
       
       
@@ -279,7 +294,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcen10gq0008mgai6s5xavpj" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcenbv63000690ai9jfk4x3t" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
       
       
       
@@ -325,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcen10gl0001mgaif9r0f4go" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcenbv5w000190aiejk94xog" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -366,7 +381,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcen10gm0002mgai1lc5d59e" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcenbv5z000490ai9q5dg2bu" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -433,7 +448,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcen10gp0007mgai90mdds5i" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcenbv64000890aidtfj06d7" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
@@ -477,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clcen10go0005mgai5bbe0y4h" data-title="URL与网址" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" data-id="clcenbv5y000290ai0sxc65n4" data-title="URL与网址" class="article-share-link">Share</a>
       
       
       
@@ -516,7 +531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clcen10gh0000mgai986m5bgm" data-title="A Grand Trial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/02/AGrandTrial/" data-id="clcenbv5s000090aia7vr4y9x" data-title="A Grand Trial" class="article-share-link">Share</a>
       
       
       
@@ -563,7 +578,7 @@
           </li>
         
           <li>
-            <a href="/2022/12/30/%E4%B8%80%E4%BA%9Bmisc%E9%A2%98%E7%9B%AE%E5%92%8C%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/">一些misc题目和涉及的知识点</a>
+            <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/">流量追踪</a>
           </li>
         
           <li>
