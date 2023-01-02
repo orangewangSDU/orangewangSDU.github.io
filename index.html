@@ -114,7 +114,7 @@
 </li>
 </ol>
 <h5 id="重点来啦！"><a href="#重点来啦！" class="headerlink" title="重点来啦！"></a>重点来啦！</h5><ol start="5">
-<li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<em>表示所有字段）<br>  （查具体字段就把</em>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
+<li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<code>*</code>表示所有字段）<br>  （查具体字段就把<code>*</code>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
 <li>where条件<br>where相当于编程语言中的if<br>例：select user,host from mysql.user where user&#x3D;’root’;</li>
 <li>创建库<br><code>create database test charset utf8mb4;</code>创建一个名为test的数据库</li>
 <li>创建表<br>先<code>use test；</code><br>再<code>create table t1(id int);</code><br>效果为：在test数据库里创建一个名为t1的表，含有一个名为id的字段，数据类型为int</li>
@@ -123,14 +123,14 @@
 <li>插入数据<br><code>insert into t1 values (1,&quot;张三&quot;),(2,&quot;李四&quot;),(3,&quot;王五&quot;)</code></li>
 </ol>
 <h2 id="GET型SQL注入漏洞是什么"><a href="#GET型SQL注入漏洞是什么" class="headerlink" title="GET型SQL注入漏洞是什么"></a>GET型SQL注入漏洞是什么</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
-<p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而#或– 的作用是注释掉后面的多余内容)</p>
+<p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而<code>#</code>或<code>-- </code>的作用是注释掉后面的多余内容)</p>
 <p>提交，查看URL<br>通过注入语句修改查询条件<code>以获取隐藏信息</code><br>应注入<code>xxx&#39; -- </code>或<code>xxx&#39;#</code>来实现这一点</p>
 <p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcf0p8yq0001g8ai869x8irx" data-title="SQL注入笔记" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcf11pl30002k8ai6xra43dv" data-title="SQL注入笔记" class="article-share-link">Share</a>
       
       
       
@@ -173,7 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clcf0p8yw0005g8aiddyb4xek" data-title="一些linux命令" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clcf11pl70008k8ai9ty2hk28" data-title="一些linux命令" class="article-share-link">Share</a>
       
       
       
@@ -220,7 +220,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcf0p8yy000ag8ai8ilr38e1" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcf11pla000ak8ai8qlgh7vd" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
       
       
       
@@ -282,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" data-id="clcf0p8yx0008g8aiggbn91iv" data-title="流量追踪" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" data-id="clcf11pla000bk8aifx9ehmui" data-title="流量追踪" class="article-share-link">Share</a>
       
       
       
@@ -325,7 +325,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcf0p8yx0007g8ai3hlwdsa3" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcf11pl90009k8aihpwr9s8e" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
       
       
       
@@ -371,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcf0p8yw0006g8aia9xr7fp7" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcf11pl40003k8ai98zt6pjv" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
       
       
       
@@ -416,7 +416,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcf0p8yy0009g8aiemf86ktm" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcf11pl50004k8aigdav8ft4" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
       
       
       
@@ -462,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcf0p8ys0003g8ai9ty642ih" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcf11pl60007k8ai3ty657am" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -503,7 +503,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcf0p8yv0004g8ai931i5hat" data-title="php伪协议" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcf11pl50005k8aiddnv5oyb" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -570,7 +570,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcf0p8yz000bg8ai6tgq608e" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcf11pl60006k8aifrqxc35v" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
       
       
       
