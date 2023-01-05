@@ -71,6 +71,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="past-搜集了sqlmap的一些指令" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2023-01-03T12:13:37.000Z" itemprop="datePublished">2023-01-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/">搜集了sqlmap的一些指令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>可以使用sqlmap工具一把梭，下面是一些有用的指令：</p>
+<p>判断是否存在注入点：<code>sqlmap.py -u url网址</code>（如果需要完整的http请求才能登录网站，可以使用<code>sqlmap.py -r 文件路径</code>，这个文件指的是http请求所在的txt文件，r指的是cookie注入）</p>
+<p>查询所有数据库：<code>sqlmap.py -u url网址 --dbs</code></p>
+<p>查询（某个数据库中的）所有表的表名：<code>sqlmap.py -u url网址 (-D database_name) --tables</code><br><code> 查询某个表的所有字段：</code>sqlmap.py -u url网址 -D database_name -T table_name –columns&#96;</p>
+<p>查询字段内容：<code>sqlmap.py -u url网址 -D database_name -T table_name -C column_names</code>(可以写多个，中间用空格隔开) –dump</p>
+<p>获取所有的用户：<code>sqlmap.py -u url网址 --users</code></p>
+<p>获取用户的密码:<code>sqlmap.py -u url网址 --passwords</code></p>
+<p>当前数据库名称：<code>sqmap.py -u url网址 --current-db</code></p>
+<p>还可以再加参数–level n(15)，等级越高，扫描越全面，从2开始进行cookie注入……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/" data-id="clcj7kpnf00049cai51dk4g1j" data-title="搜集了sqlmap的一些指令" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="past-SQL注入笔记" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="article-date">
@@ -94,6 +141,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>下面是SQL注入学习过程中的笔记：</p>
+<h2 id="mysql简介"><a href="#mysql简介" class="headerlink" title="mysql简介"></a>mysql简介</h2><p>mysql包含四个库，分别是information_schema，mysql，performance_schema，sys（使用SHOW DATABASES访问）<br>information_schema存储着所有的其他数据库的信息，包含数据库名，数据库表名，数据类型，访问权限等等<br>其中COLUMNS存储字段信息，TABLES存储表名，SCHEMATA存储着所有数据库信息（show databases结果就存储在这个表中）<br>在TABLES表中，TABLE_NAME存储表名，TABLE_SCHEMA存储这个表所在的数据库<br>在COLUMNS表中，COLUMN_NAME存储着表的字段名，TABLE_NAME也是存储表名</p>
 <h2 id="一些SQL语法"><a href="#一些SQL语法" class="headerlink" title="一些SQL语法"></a>一些SQL语法</h2><ol>
 <li>注释<ol>
 <li><code>-- （一个空格）</code>后面的内容叫注释!</li>
@@ -114,7 +162,8 @@
 </li>
 </ol>
 <h5 id="重点来啦！"><a href="#重点来啦！" class="headerlink" title="重点来啦！"></a>重点来啦！</h5><ol start="5">
-<li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<code>*</code>表示所有字段）<br>  （查具体字段就把<code>*</code>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
+<li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<code>*</code>表示所有字段）<br>  查具体字段就把<code>*</code>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
+<li>union联合查询<br>例：<br><code>select * from test.t1 union select 1,2,3,4,5;</code><br><code>select user,host from mysql.user union select * from test.t1;</code></li>
 <li>where条件<br>where相当于编程语言中的if<br>例：select user,host from mysql.user where user&#x3D;’root’;</li>
 <li>创建库<br><code>create database test charset utf8mb4;</code>创建一个名为test的数据库</li>
 <li>创建表<br>先<code>use test；</code><br>再<code>create table t1(id int);</code><br>效果为：在test数据库里创建一个名为t1的表，含有一个名为id的字段，数据类型为int</li>
@@ -122,15 +171,27 @@
 <li>给表添加字段<br><code>alter table 表名 add 字段名 数据类型</code><br>例：alter table t1 add name varchar(32);</li>
 <li>插入数据<br><code>insert into t1 values (1,&quot;张三&quot;),(2,&quot;李四&quot;),(3,&quot;王五&quot;)</code></li>
 </ol>
+<h2 id="判断是否存在SQL注入漏洞"><a href="#判断是否存在SQL注入漏洞" class="headerlink" title="判断是否存在SQL注入漏洞"></a>判断是否存在SQL注入漏洞</h2><p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
 <h2 id="GET型SQL注入漏洞是什么"><a href="#GET型SQL注入漏洞是什么" class="headerlink" title="GET型SQL注入漏洞是什么"></a>GET型SQL注入漏洞是什么</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
 <p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而<code>#</code>或<code>-- </code>的作用是注释掉后面的多余内容)</p>
-<p>提交，查看URL<br>通过注入语句修改查询条件<code>以获取隐藏信息</code><br>应注入<code>xxx&#39; -- </code>或<code>xxx&#39;#</code>来实现这一点</p>
-<p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
+<ul>
+<li>检索隐藏数据</li>
+<li>修改应用程序（语句）逻辑</li>
+<li>Union attack</li>
+<li>获取敏感数据</li>
+<li>盲注</li>
+</ul>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>提交，查看URL</p>
+<ol>
+<li>通过注入语句修改查询条件<code>以获取隐藏信息</code>：<br>应注入<code>xxx&#39; -- </code>或<code>xxx&#39;#</code>来实现这一点</li>
+<li>查询出所有信息：<br>注入<code>xxx&#39; or 1=1#</code>或<code>xxx&#39; or 1=1 -- </code>来干掉sql语句中的where条件</li>
+<li>删库<br>注入<code>xxx&#39;;drop database 数据库名;#</code><br>或<code>xxx&#39;;drop database 数据库名; -- </code><br>（前提：服务端连接数据库时允许执行多条sql语句）</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcf12cru0000t8ai8aamgagx" data-title="SQL注入笔记" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcj7kpn600009cai3cxi0aws" data-title="SQL注入笔记" class="article-share-link">Share</a>
       
       
       
@@ -173,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clcf12cs10005t8aih0euaead" data-title="一些linux命令" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clcj7kpnh00089cai9tm55atp" data-title="一些linux命令" class="article-share-link">Share</a>
       
       
       
@@ -212,15 +273,14 @@
 <p>题目：攻防世界simple_transfer</p>
 <p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑)</p>
 <h3 id="文件分离"><a href="#文件分离" class="headerlink" title="文件分离"></a>文件分离</h3><p>这里使用的是kali虚拟机，root下的操作……<br>命令：sudo su<br>输入密码即可进入root下！<br><code>foremost 文件名</code><br>（如果有隐藏文件的话会将其分离）</p>
-<h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件</p>
-<p><code>binwalk -e 文件名</code></p>
+<h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件<br><code>binwalk 文件名</code><br>如果想顺手操作一下？<br><code>binwalk -e 文件名</code></p>
 <p>分离完出现了一个PDF文件，打开得到了flag</p>
 <p>(不知道出题人怎么想的）</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcf12cs7000bt8ai6v5ea3yu" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcj7kpnh00079cai8ejx64lr" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
       
       
       
@@ -232,9 +292,9 @@
 
 
   
-    <article id="past-流量追踪" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="past-wireshark流量分析" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" class="article-date">
+    <a href="/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" class="article-date">
   <time class="dt-published" datetime="2022-12-30T12:17:09.000Z" itemprop="datePublished">2022-12-30</time>
 </a>
     
@@ -246,7 +306,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/">流量追踪</a>
+      <a class="p-name article-title" href="/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">wireshark流量分析</a>
     </h1>
   
 
@@ -277,12 +337,12 @@
 <li>第四行：传输层的详细信息，主要的是双方的端口号</li>
 <li>第五行：TCP或UDP是传输的DATA，DNS这是域名的相关信息</li>
 </ul>
-<p>仅以自己的方式粗略总结，具体描述参见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116800657">https://blog.csdn.net/LYJ20010728/article/details/116800657</a></p>
+<p>仅以自己的方式粗略总结，具体描述参见：1.<a target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116800657">https://blog.csdn.net/LYJ20010728/article/details/116800657</a><br>2.<a target="_blank" rel="noopener" href="https://www.cnblogs.com/loopkep/p/13167281.html">https://www.cnblogs.com/loopkep/p/13167281.html</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/" data-id="clcf12cs30009t8ai7j84apc8" data-title="流量追踪" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" data-id="clcj7kpnd00029caibqb0gut9" data-title="wireshark流量分析" class="article-share-link">Share</a>
       
       
       
@@ -325,7 +385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcf12cs10006t8ai516u4wx7" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcj7kpng00069cai1oq61oii" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
       
       
       
@@ -371,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcf12cs20007t8ai1lgw8k3k" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcj7kpnj000a9cai0s0a1x5u" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
       
       
       
@@ -416,7 +476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcf12cs20008t8aieq5a0sxi" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcj7kpnm000c9cai4odph2z4" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
       
       
       
@@ -462,7 +522,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcf12cs00004t8ai7ljcacap" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcj7kpnb00019cai2jcubic7" data-title="XFF和Referer" class="article-share-link">Share</a>
       
       
       
@@ -503,74 +563,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcf12cry0001t8ai599bbgvm" data-title="php伪协议" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="past-机器人排除标准（robot exclusion standard)" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" class="article-date">
-  <time class="dt-published" datetime="2022-12-23T10:05:29.000Z" itemprop="datePublished">2022-12-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/">机器人排除标准（robot exclusion standard)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>什么是机器人排除标准</p>
-<p>根据前面的介绍，确实有必要对爬虫的行为做出一定的限制。这种限制称为机器人排除标准(robot exclusion standard)或是机器人排除协议(robot exclusion protocol)，或是robot.txt。</p>
-<p>这些东西的本质就是robot.txt 文件。这个文本文件应该放在网站的根目录下，其中就说明了网站中的哪些网页是爬虫不能索引的。</p>
-<p>需要使用特定的语法才能使爬虫理解文件中的含义。这个文本文件的基本形式如下：</p>
-<p>User-agent: *<br>Disallow: &#x2F;<br>这两个部分是必需的。第一个部分，User-agent:，是告诉爬虫所针对的是哪个用户代理(user agent)，实际上就是爬虫。星号(*)表示所有的爬虫，也可以指定一个或若干个爬虫。</p>
-<p>第二个部分，Disallow:，是告诉爬虫哪些地方是不能访问的。斜杠(&#x2F;)表示“所有目录”。所以在前面的这个例子中，这个robot.txt 文件的意思就是“任何爬虫都要忽略所有的目录”。</p>
-<p>在编写robot.txt 文件时，要记得在User-agent 和Disallow 指令后面加上冒号(:)。冒号后面的信息就是要求爬虫注意的信息。</p>
-<p>在实际情况下，很少会要求爬虫忽略所有的目录。可以要求爬虫忽略网站总的临时目录，robot.txt 的内容如下：</p>
-<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>也可以进一步要求爬虫忽略若干个目录：</p>
-<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;private&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>这段代码就是告诉爬虫忽略临时目录、私人目录以及内容是链接的网页——爬虫也就无法跟踪网页中的链接。</p>
-<p>要注意，爬虫对robot.txt 是从上至下读取的，一旦发现合适的规定就会停止读取，并开始根据规则访问网站。所以，如果在robot.txt 文件中对多个爬虫制定访问规则，就一定要小心。</p>
-<p>下面的用法就是错误的：</p>
-<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>User-agent: CrawlerName<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>这段代码首先是告诉所有的爬虫要忽略临时目录。因此，所有的爬虫在读取这个文件时都会忽略临时目录。但这段代码接着又不允许某个特定的爬虫(用CrawlerName 表示)访问临时目录和listing 网页中的链接。但问题是，这个特定的爬虫根本就不会接收到这条指令，因为它已经根据第一条命令忽略了临时目录，开始读取网站的其他部分。</p>
-<p>如果要对不同的爬虫发出不同的命令，应该先写针对特定爬虫的命令。将针对所有爬虫的命令放在最后面。将前一个例子修改正确后，应该如下所示：</p>
-<p>User-agent: CrawlerName<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>上面这种技巧可以很方便地使爬虫忽略网站中的某个网页或链接，而无需使其忽略整个网站或整个目录，也无需在每个网页中逐个地加入元标签。</p>
-<p>不同的搜索引擎爬虫有不同的名字，在Web 服务器的记录中应该能看到这些名字。下面列出了一些常见的搜索引擎爬虫的名称：</p>
-<p>Google：Googlebot</p>
-<p>MSN：MSNbot</p>
-<p>Yahoo! Web Search：Yahoo SLURP 或简称SLURP</p>
-<p>Ask：Teoma</p>
-<p>AltaVista：Scooter</p>
-<p>LookSmart：MantraAgent</p>
-<p>WebCrawler：WebCrawler</p>
-<p>SearchHippo：Fluffy the Spider</p>
-<p>这里只是列出了很少的一部分搜索引擎爬虫。在Web Robots Pages(<a target="_blank" rel="noopener" href="http://www.robotstxt.org/">www.robotstxt.org</a>)</p>
-<p>上可以找到完整列表，以及机器人排除标准(Robot Exclusion Standard)文档。应该花点时间阅读该文档。这份文档不长，通读一下有助于理解爬虫与网站之间的交互方式。这方面的深入理解也有助于更好地控制爬虫对网站的访问。</p>
-<p>有必要知道爬虫属于哪个搜索引擎，因为还有一些恶意的爬虫(spambot)也会检索网站。如果不知道这些爬虫的名称，就无法阻止这些爬虫对网站的恶意访问，也不能确保用户信息的安全。恶意爬虫非常讨厌，它们会搜索网站中的所有信息，收集其中的电子邮箱地址。这些地址被收集到一起之后就卖给广告商，甚至有可能卖给非法组织。几乎所有的恶意爬虫都不会理睬robots.txt 文件。</p>
-<p>在网站的基本地址后面加上robots.txt，就能看到各个网站的robots.txt 文件。例如，访问<a target="_blank" rel="noopener" href="http://www.sampleaddress.com/robots.txt">www.sampleaddress.com/robots.txt</a> 就能看到该网站的robots.txt 文本文件。如果通过这样的链接没能看到网站的robots.txt 文件，那这个网站就没有robots.txt。</p>
-<p>可以用任何文本编辑器来创建robots.txt 文件。要记住，并不是每个人都需要robots.txt文件。如果不在意是谁在检索网站，那就没必要使用这个文件。但不管怎么样，都不要使用空白的robots.txt 文件。在爬虫看来，空文件意味着网站不愿意被任何爬虫检索。所以，使用空白文件可以使网站不出现在搜索引擎的搜索结果中。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcf12cs6000at8ai9opa69e3" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clcj7kpng00059cai47dmaw20" data-title="php伪协议" class="article-share-link">Share</a>
       
       
       
@@ -618,6 +611,10 @@
       <ul>
         
           <li>
+            <a href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/">搜集了sqlmap的一些指令</a>
+          </li>
+        
+          <li>
             <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
           </li>
         
@@ -630,11 +627,7 @@
           </li>
         
           <li>
-            <a href="/2022/12/30/%E6%B5%81%E9%87%8F%E8%BF%BD%E8%B8%AA/">流量追踪</a>
-          </li>
-        
-          <li>
-            <a href="/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/">png文件结构及图片CRC相关</a>
+            <a href="/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">wireshark流量分析</a>
           </li>
         
       </ul>
