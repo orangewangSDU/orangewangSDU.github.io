@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>机器人排除标准（robot exclusion standard) | Orange Wang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="什么是机器人排除标准 根据前面的介绍，确实有必要对爬虫的行为做出一定的限制。这种限制称为机器人排除标准(robot exclusion standard)或是机器人排除协议(robot exclusion protocol)，或是robot.txt。 这些东西的本质就是robot.txt 文件。这个文本文件应该放在网站的根目录下，其中就说明了网站中的哪些网页是爬虫不能索引的。 需要使用特定的语法才">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器人排除标准（robot exclusion standard)">
+<meta property="og:url" content="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/index.html">
+<meta property="og:site_name" content="Orange Wang的博客">
+<meta property="og:description" content="什么是机器人排除标准 根据前面的介绍，确实有必要对爬虫的行为做出一定的限制。这种限制称为机器人排除标准(robot exclusion standard)或是机器人排除协议(robot exclusion protocol)，或是robot.txt。 这些东西的本质就是robot.txt 文件。这个文本文件应该放在网站的根目录下，其中就说明了网站中的哪些网页是爬虫不能索引的。 需要使用特定的语法才">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-23T10:05:29.000Z">
+<meta property="article:modified_time" content="2022-12-23T10:38:44.325Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Orange Wang的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Orange Wang的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="past-机器人排除标准（robot exclusion standard)" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" class="article-date">
+  <time class="dt-published" datetime="2022-12-23T10:05:29.000Z" itemprop="datePublished">2022-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      机器人排除标准（robot exclusion standard)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>什么是机器人排除标准</p>
+<p>根据前面的介绍，确实有必要对爬虫的行为做出一定的限制。这种限制称为机器人排除标准(robot exclusion standard)或是机器人排除协议(robot exclusion protocol)，或是robot.txt。</p>
+<p>这些东西的本质就是robot.txt 文件。这个文本文件应该放在网站的根目录下，其中就说明了网站中的哪些网页是爬虫不能索引的。</p>
+<p>需要使用特定的语法才能使爬虫理解文件中的含义。这个文本文件的基本形式如下：</p>
+<p>User-agent: *<br>Disallow: &#x2F;<br>这两个部分是必需的。第一个部分，User-agent:，是告诉爬虫所针对的是哪个用户代理(user agent)，实际上就是爬虫。星号(*)表示所有的爬虫，也可以指定一个或若干个爬虫。</p>
+<p>第二个部分，Disallow:，是告诉爬虫哪些地方是不能访问的。斜杠(&#x2F;)表示“所有目录”。所以在前面的这个例子中，这个robot.txt 文件的意思就是“任何爬虫都要忽略所有的目录”。</p>
+<p>在编写robot.txt 文件时，要记得在User-agent 和Disallow 指令后面加上冒号(:)。冒号后面的信息就是要求爬虫注意的信息。</p>
+<p>在实际情况下，很少会要求爬虫忽略所有的目录。可以要求爬虫忽略网站总的临时目录，robot.txt 的内容如下：</p>
+<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>也可以进一步要求爬虫忽略若干个目录：</p>
+<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;private&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>这段代码就是告诉爬虫忽略临时目录、私人目录以及内容是链接的网页——爬虫也就无法跟踪网页中的链接。</p>
+<p>要注意，爬虫对robot.txt 是从上至下读取的，一旦发现合适的规定就会停止读取，并开始根据规则访问网站。所以，如果在robot.txt 文件中对多个爬虫制定访问规则，就一定要小心。</p>
+<p>下面的用法就是错误的：</p>
+<p>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>User-agent: CrawlerName<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>这段代码首先是告诉所有的爬虫要忽略临时目录。因此，所有的爬虫在读取这个文件时都会忽略临时目录。但这段代码接着又不允许某个特定的爬虫(用CrawlerName 表示)访问临时目录和listing 网页中的链接。但问题是，这个特定的爬虫根本就不会接收到这条指令，因为它已经根据第一条命令忽略了临时目录，开始读取网站的其他部分。</p>
+<p>如果要对不同的爬虫发出不同的命令，应该先写针对特定爬虫的命令。将针对所有爬虫的命令放在最后面。将前一个例子修改正确后，应该如下所示：</p>
+<p>User-agent: CrawlerName<br>Disallow: &#x2F;tmp&#x2F;<br>Disallow: &#x2F;links&#x2F;listing.html<br>User-agent: *<br>Disallow: &#x2F;tmp&#x2F;<br>上面这种技巧可以很方便地使爬虫忽略网站中的某个网页或链接，而无需使其忽略整个网站或整个目录，也无需在每个网页中逐个地加入元标签。</p>
+<p>不同的搜索引擎爬虫有不同的名字，在Web 服务器的记录中应该能看到这些名字。下面列出了一些常见的搜索引擎爬虫的名称：</p>
+<p>Google：Googlebot</p>
+<p>MSN：MSNbot</p>
+<p>Yahoo! Web Search：Yahoo SLURP 或简称SLURP</p>
+<p>Ask：Teoma</p>
+<p>AltaVista：Scooter</p>
+<p>LookSmart：MantraAgent</p>
+<p>WebCrawler：WebCrawler</p>
+<p>SearchHippo：Fluffy the Spider</p>
+<p>这里只是列出了很少的一部分搜索引擎爬虫。在Web Robots Pages(<a target="_blank" rel="noopener" href="http://www.robotstxt.org/">www.robotstxt.org</a>)</p>
+<p>上可以找到完整列表，以及机器人排除标准(Robot Exclusion Standard)文档。应该花点时间阅读该文档。这份文档不长，通读一下有助于理解爬虫与网站之间的交互方式。这方面的深入理解也有助于更好地控制爬虫对网站的访问。</p>
+<p>有必要知道爬虫属于哪个搜索引擎，因为还有一些恶意的爬虫(spambot)也会检索网站。如果不知道这些爬虫的名称，就无法阻止这些爬虫对网站的恶意访问，也不能确保用户信息的安全。恶意爬虫非常讨厌，它们会搜索网站中的所有信息，收集其中的电子邮箱地址。这些地址被收集到一起之后就卖给广告商，甚至有可能卖给非法组织。几乎所有的恶意爬虫都不会理睬robots.txt 文件。</p>
+<p>在网站的基本地址后面加上robots.txt，就能看到各个网站的robots.txt 文件。例如，访问<a target="_blank" rel="noopener" href="http://www.sampleaddress.com/robots.txt">www.sampleaddress.com/robots.txt</a> 就能看到该网站的robots.txt 文本文件。如果通过这样的链接没能看到网站的robots.txt 文件，那这个网站就没有robots.txt。</p>
+<p>可以用任何文本编辑器来创建robots.txt 文件。要记住，并不是每个人都需要robots.txt文件。如果不在意是谁在检索网站，那就没必要使用这个文件。但不管怎么样，都不要使用空白的robots.txt 文件。在爬虫看来，空文件意味着网站不愿意被任何爬虫检索。所以，使用空白文件可以使网站不出现在搜索引擎的搜索结果中。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/" data-id="clcupgfi1000f28aiebxm14zp" data-title="机器人排除标准（robot exclusion standard)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          php伪协议
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/11/02/URL%E4%B8%8E%E7%BD%91%E5%9D%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">URL与网址</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/">zip和rar文件的伪加密</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/">http重定向</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/">一句话木马和Webshell</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/">搜集了sqlmap的一些指令</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

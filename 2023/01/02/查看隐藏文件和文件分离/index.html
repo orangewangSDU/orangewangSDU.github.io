@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>查看隐藏文件和文件分离 | Orange Wang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="2023.1.2 WP 新年新气象，跨年打比赛这感觉……装上虚拟机，用用新工具 题目：攻防世界simple_transfer 下载了一个pcap流量包文件用wireshark打开乱的一批，于是进行协议分级（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）对协议进行过滤，并未找到有用信息。看了WP，竟然是文件分离（摸不着头脑) 文件分离这里使用的是kali虚拟机，root下的操作…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查看隐藏文件和文件分离">
+<meta property="og:url" content="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/index.html">
+<meta property="og:site_name" content="Orange Wang的博客">
+<meta property="og:description" content="2023.1.2 WP 新年新气象，跨年打比赛这感觉……装上虚拟机，用用新工具 题目：攻防世界simple_transfer 下载了一个pcap流量包文件用wireshark打开乱的一批，于是进行协议分级（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）对协议进行过滤，并未找到有用信息。看了WP，竟然是文件分离（摸不着头脑) 文件分离这里使用的是kali虚拟机，root下的操作…">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-02T09:57:44.000Z">
+<meta property="article:modified_time" content="2023-01-03T12:37:45.795Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Orange Wang的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Orange Wang的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="past-查看隐藏文件和文件分离" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" class="article-date">
+  <time class="dt-published" datetime="2023-01-02T09:57:44.000Z" itemprop="datePublished">2023-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      查看隐藏文件和文件分离
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>2023.1.2 WP</p>
+<p>新年新气象，跨年打比赛这感觉……<br>装上虚拟机，用用新工具</p>
+<p>题目：攻防世界simple_transfer</p>
+<p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑)</p>
+<h3 id="文件分离"><a href="#文件分离" class="headerlink" title="文件分离"></a>文件分离</h3><p>这里使用的是kali虚拟机，root下的操作……<br>命令：sudo su<br>输入密码即可进入root下！<br><code>foremost 文件名</code><br>（如果有隐藏文件的话会将其分离）</p>
+<h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件<br><code>binwalk 文件名</code><br>如果想顺手操作一下？<br><code>binwalk -e 文件名</code></p>
+<p>分离完出现了一个PDF文件，打开得到了flag</p>
+<p>(不知道出题人怎么想的）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcupgfi1000e28ai973xgip5" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          一些linux命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">wireshark流量分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/">zip和rar文件的伪加密</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/">http重定向</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/">一句话木马和Webshell</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/">搜集了sqlmap的一些指令</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
