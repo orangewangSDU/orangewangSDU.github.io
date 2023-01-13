@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>XFF和Referer | Orange Wang的博客</title>
+  <title>http重定向 | Orange Wang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="关于xff和referer： X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。 HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。简单地说，xff是告诉服务器当前请求">
+  <meta name="description" content="什么是http重定向HTTP中的重定向就是当客户端访问一个服务器不可用的资源后，服务器会返回一个响应包，响应包中带有另一个链接，然后浏览器会自动跳转到另一个链接，无需用户点击，是浏览器自动跳转的。 重定向原理客户端访问了一个不可用的资源，然后服务器返回了一个响应包。响应包有以下特点：1、 status code &#x3D; 3xx，表示这是一个重定向包2、 响应头中有一个location属性，对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XFF和Referer">
-<meta property="og:url" content="http://example.com/2022/12/23/XFF%E5%92%8CReferer/index.html">
+<meta property="og:title" content="http重定向">
+<meta property="og:url" content="http://example.com/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/index.html">
 <meta property="og:site_name" content="Orange Wang的博客">
-<meta property="og:description" content="关于xff和referer： X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。 HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。简单地说，xff是告诉服务器当前请求">
+<meta property="og:description" content="什么是http重定向HTTP中的重定向就是当客户端访问一个服务器不可用的资源后，服务器会返回一个响应包，响应包中带有另一个链接，然后浏览器会自动跳转到另一个链接，无需用户点击，是浏览器自动跳转的。 重定向原理客户端访问了一个不可用的资源，然后服务器返回了一个响应包。响应包有以下特点：1、 status code &#x3D; 3xx，表示这是一个重定向包2、 响应头中有一个location属性，对">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-12-23T10:30:38.000Z">
-<meta property="article:modified_time" content="2022-12-23T10:38:21.463Z">
+<meta property="article:published_time" content="2023-01-13T11:50:51.000Z">
+<meta property="article:modified_time" content="2023-01-13T12:12:39.015Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +73,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="past-XFF和Referer" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="past-http重定向" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/12/23/XFF%E5%92%8CReferer/" class="article-date">
-  <time class="dt-published" datetime="2022-12-23T10:30:38.000Z" itemprop="datePublished">2022-12-23</time>
+    <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/" class="article-date">
+  <time class="dt-published" datetime="2023-01-13T11:50:51.000Z" itemprop="datePublished">2023-01-13</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      XFF和Referer
+      http重定向
     </h1>
   
 
@@ -95,19 +95,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>关于xff和referer：</p>
-<p>X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。</p>
-<p>HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。简单地说，xff是告诉服务器当前请求者的最终ip的http请求头字段通常可以直接通过修改http头中的X-Forwarded-For字段来仿造请求的最终ip</p>
-<p>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>也就是说：</p>
-<p>xff 是http的拓展头部，作用是使Web服务器获取访问用户的IP真实地址（可伪造）。由于很多用户通过代理服务器进行访问，服务器只能获取代理服务器的IP地址，而xff的作用在于记录用户的真实IP，以及代理服务器的IP。</p>
-<p>格式为：X-Forwarded-For: 本机IP, 代理1IP, 代理2IP, 代理2IP</p>
-<p>referer 是http的拓展头部，作用是记录当前请求页面的来源页面的地址。服务器使用referer确认访问来源，如果referer内容不符合要求，服务器可以拦截或者重定向请求。<br>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>即：XFF构造来源IP，Referer构造来源浏览器！</p>
-<p>提取的解题方法：<br>用抓包软件burpsuit进行抓包，<br>在包里直接添加<br>X-Forwarded-For:IP名<br>Referer:地址<br>（同时在包里）<br>发送即可！</p>
+        <h3 id="什么是http重定向"><a href="#什么是http重定向" class="headerlink" title="什么是http重定向"></a>什么是http重定向</h3><p>HTTP中的重定向就是当客户端访问一个服务器不可用的资源后，服务器会返回一个响应包，响应包中带有另一个链接，然后浏览器会自动跳转到另一个链接，无需用户点击，是浏览器自动跳转的。</p>
+<h3 id="重定向原理"><a href="#重定向原理" class="headerlink" title="重定向原理"></a>重定向原理</h3><p>客户端访问了一个不可用的资源，然后服务器返回了一个响应包。<br><strong>响应包有以下特点：</strong><br>1、 status code &#x3D; 3xx，表示这是一个重定向包<br>2、 响应头中有一个location属性，对应的值为需要跳转到的新链接。<br>3、 浏览器自动发起一个http请求访问新链接<br>4、 服务器返回新链接响应的数据，在浏览器中展示</p>
+<h3 id="永久重定向和临时重定向"><a href="#永久重定向和临时重定向" class="headerlink" title="永久重定向和临时重定向"></a>永久重定向和临时重定向</h3><p>status code &#x3D; 301： 永久重定向，搜索引擎或者浏览器会自动将书签、历史记录、搜索引擎对应的记录中旧链接更新为新链接。下次就访问新链接。<br>status code &#x3D; 302： 临时重定向，原来的URL仍然有效，下次还访问旧链接。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40276626/article/details/120383434">https://blog.csdn.net/qq_40276626/article/details/120383434</a></p>
+<h2 id="ctf-302跳转"><a href="#ctf-302跳转" class="headerlink" title="ctf 302跳转"></a>ctf 302跳转</h2><p>进入题目页面，发现<code>Give me Flag</code>，点击，发现页面未跳转，结合题意，可知发生了302临时跳转，所以我们<code>无法通过浏览器直接访问未跳转的页面</code>，而flag 可能藏在我们目前无法访问的页面之中。所以我们要想办法去<code>访问未跳转的原网站</code>。<br>方法：抓包，右键–&gt;Send to Repeater–&gt;Repeater模块–&gt;Send–&gt;Response部分出现flag </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clculhymv0002t8aif376cexq" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/" data-id="clculhymu0001t8ai8atv9dc9" data-title="http重定向" class="article-share-link">Share</a>
       
       
       
@@ -117,19 +114,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          攻防世界unserialize3题解及一些知识点
+          zip和rar文件的伪加密
         
       </div>
     </a>
   
   
-    <a href="/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">php伪协议</div>
+      <div class="article-nav-title">一句话木马和Webshell</div>
     </a>
   
 </nav>

