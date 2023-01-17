@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    <meta name="description" content="Hexo Theme Redefine">
+    <meta name="author" content="Orange Wang">
+    <link rel="canonical" href="http://example.com/2023/01/17/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
+    <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
+    <link rel="shortcut icon" href="/images/favicon%20of%20my%20blog.jpg">
+    
+    <title>
+        
+            php代码审计 |
+        
+        Orange Wang&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/fonts.css">
+
+    
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    <script id="hexo-configurations">
+    let REDEFINE = window.REDEFINE || {};
+    REDEFINE.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    REDEFINE.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#005080","avatar":"/images/favicon of my blog.jpg","favicon":"/images/favicon of my blog.jpg","article_img_align":"center","right_side_width":"210px","content_max_width":"1000px","nav_color":{"left":"#f78736","right":"#367df7","transparency":35},"hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_image":{"light":"https://evan.beee.top/img/wallhaven-wqery6-light.webp","dark":"https://evan.beee.top/img/wallhaven-wqery6-dark.webp"},"title_color":{"light":"#fff","dark":"#d1d1b6"},"description":"Theme Redefine"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":true},"code_block":{"copy":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"0.5.2","friend_links":{"columns":2}};
+    REDEFINE.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+    
+    
+<link rel="stylesheet" href="/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/brands.min.css">
+
+    
+<link rel="stylesheet" href="/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/css/regular.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+    
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Orange Wang&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                            <li class="menu-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="menu-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        ARCHIVES
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                    <li class="drawer-menu-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-menu-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                ARCHIVES
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+            <div class="article-title">
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">php代码审计</h1></span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/favicon%20of%20my%20blog.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Orange Wang</span>
+                            
+                                <span class="author-label">lol</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="pc">2023-01-17 10:23:50</span>
+        <span class="mobile">2023-01-17 10:23</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h2 id="php代码审计"><a href="#php代码审计" class="headerlink" title="php代码审计"></a>php代码审计</h2><p>这是一大类题目，需要读懂php代码并构造payload传入或自己编写代码，知识点多且杂</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="1-BUUCTF-ACTF2020-新生赛-BackupFile"><a href="#1-BUUCTF-ACTF2020-新生赛-BackupFile" class="headerlink" title="1.BUUCTF[ACTF2020 新生赛]BackupFile"></a>1.BUUCTF[ACTF2020 新生赛]BackupFile</h3><p>进入给了一句话：<br>Try to find out source file<br>题目有提示backupfile备份文件<br>那就是<br>bak文件</p>
+<blockquote>
+<p>bak是备份文件，为文件格式扩展名。<br>这类文件一般在.bak前面加上应该有原来的扩展名<br>那就访问备份文件！<br>直接在网址栏后面&#x2F;index.php.bak<br>下载了该文件，打开是一段最简单的PHP代码<br>对于我这种啥也不会的新手已经非常非常非常非常非常友好了！！！</p>
+</blockquote>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include_once</span> <span class="string">&quot;flag.php&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;key&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$key</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;key&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">is_numeric</span>(<span class="variable">$key</span>)) &#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">&quot;Just num!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$key</span> = <span class="title function_ invoke__">intval</span>(<span class="variable">$key</span>);</span><br><span class="line">    <span class="variable">$str</span> = <span class="string">&quot;123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$key</span> == <span class="variable">$str</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Try to find out source file!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>现在开始学总比老是拖着强！</p>
+<ol>
+<li>include_once() 语句是指在脚本执行期间包含并运行指定文件。有了once，应该用于在脚本执行期间同一个文件有可能被包含超过一次的情况下，想确保它只被包含一次以避免函数重定义，变量重新赋值等问题。</li>
+<li>isset() 函数：用于检测变量是否已设置并且非 NULL。</li>
+<li>$GET<br>预定义的 $GET 变量用于收集来自 method&#x3D;”get” 的表单中的值。<br>从带有 GET 方法的表单发送的信息，对任何人都是可见的（会显示在浏览器的地址栏url）</li>
+<li>is_numeric() 函数用于检测变量是否为数字或数字字符串。</li>
+<li>exit() 函数输出一条消息，并退出当前脚本。</li>
+<li>php是弱类型语言，其变量比较包括松散比较和严格比较：<br>松散比较：使用两个等号 &#x3D;&#x3D; 比较，<code>只比较值，不比较类型</code>。<br>严格比较：用三个等号 &#x3D;&#x3D;&#x3D; 比较，<code>除了比较值，也比较类型</code>。</li>
+<li>intval() 函数用于获取变量的整数值。<br>intval() 函数通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。<br>但是！！！<br>对于intval()而言，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值。（如果字符串第一个是‘-‘，则从第二个开始算起。）<br>有了这些就可以分析出，我们应该以get形式传入一个key&#x3D;123<br>得到了flag！<br>flag{7430481c-683b-4534-95e7-dc6c06c66de5}</li>
+</ol>
+<h4 id="涉及的知识点"><a href="#涉及的知识点" class="headerlink" title="涉及的知识点"></a>涉及的知识点</h4><ol>
+<li>include_once() 语句是指在脚本执行期间包含并运行指定文件。有了once，应该用于在脚本执行期间同一个文件有可能被包含超过一次的情况下，想确保它只被包含一次以避免函数重定义，变量重新赋值等问题。</li>
+<li>isset() 函数：用于检测变量是否已设置并且非 NULL。</li>
+<li>$GET<br>预定义的 $GET 变量用于收集来自 method&#x3D;”get” 的表单中的值。<br>从带有 GET 方法的表单发送的信息，对任何人都是可见的（会显示在浏览器的地址栏url）</li>
+<li>is_numeric() 函数用于检测变量是否为数字或数字字符串。</li>
+<li>exit() 函数输出一条消息，并退出当前脚本。</li>
+<li>php是弱类型语言，其变量比较包括松散比较和严格比较：<br>松散比较：使用两个等号 &#x3D;&#x3D; 比较，只比较值，不比较类型。<br>严格比较：用三个等号 &#x3D;&#x3D;&#x3D; 比较，除了比较值，也比较类型。</li>
+<li>intval() 函数通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。<br>对于intval()而言，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值。（如果字符串第一个是‘-‘，则从第二个开始算起。）</li>
+</ol>
+<h3 id="2-攻防世界web2"><a href="#2-攻防世界web2" class="headerlink" title="2.攻防世界web2"></a>2.攻防世界web2</h3><p>打开环境给了这样的php代码：</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$miwen</span>=<span class="string">&quot;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$_o</span>=<span class="title function_ invoke__">strrev</span>(<span class="variable">$str</span>);</span><br><span class="line">                 <span class="comment">// echo $_o;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$_0</span>=<span class="number">0</span>;<span class="variable">$_0</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$_o</span>);<span class="variable">$_0</span>++)</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="variable">$_c</span>=<span class="title function_ invoke__">substr</span>(<span class="variable">$_o</span>,<span class="variable">$_0</span>,<span class="number">1</span>);</span><br><span class="line">        <span class="variable">$__</span>=<span class="title function_ invoke__">ord</span>(<span class="variable">$_c</span>)+<span class="number">1</span>;</span><br><span class="line">        <span class="variable">$_c</span>=<span class="title function_ invoke__">chr</span>(<span class="variable">$__</span>);</span><br><span class="line">        <span class="variable">$_</span>=<span class="variable">$_</span>.<span class="variable">$_c</span>;   </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">str_rot13</span>(<span class="title function_ invoke__">strrev</span>(<span class="title function_ invoke__">base64_encode</span>(<span class="variable">$_</span>)));</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   逆向加密算法，解密$miwen就是flag</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>编写解密的脚本:</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">base64_decode</span>(<span class="title function_ invoke__">strrev</span>(<span class="title function_ invoke__">str_rot13</span>(<span class="string">&quot;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&quot;</span>)));       </span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$_0</span>=<span class="number">0</span>;<span class="variable">$_0</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$a</span>);<span class="variable">$_0</span>++)&#123;      </span><br><span class="line">    <span class="variable">$_c</span>=<span class="title function_ invoke__">substr</span>(<span class="variable">$a</span>,<span class="variable">$_0</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="variable">$__</span>=<span class="title function_ invoke__">ord</span>(<span class="variable">$_c</span>)-<span class="number">1</span>;</span><br><span class="line">    <span class="variable">$_c</span>=<span class="title function_ invoke__">chr</span>(<span class="variable">$__</span>);</span><br><span class="line">    <span class="variable">$d</span>=<span class="variable">$d</span>.<span class="variable">$_c</span>;          <span class="comment">//   .  的作用是拼接字符串！</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strrev</span>(<span class="variable">$d</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>运行即可得到flag!<br>flag:{NSCTF_b73d5adfb819c64603d7237fa0d52977}</p>
+<h4 id="涉及的知识点-1"><a href="#涉及的知识点-1" class="headerlink" title="涉及的知识点"></a>涉及的知识点</h4><p>对出现的函数进行分析：</p>
+<ol>
+<li>strrev() 函数反转字符串。<br>如：<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strrev</span>(<span class="string">&quot;I like Li Peilin in my senior high!&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span><span class="comment">//会输出!hgih roines ym ni nilieP iL ekil I</span></span><br></pre></td></tr></table></figure></div></li>
+<li>strlen() 函数返回字符串的长度</li>
+<li>substr()函数返回字符串的一部分。<br>用法为：<code>substr(string,start,length)</code><br>其中：</li>
+</ol>
+<blockquote>
+<p>string是待操作的字符串；</p>
+</blockquote>
+<blockquote>
+<p>start规定在字符串的何处开始返回（必须有！）：</p>
+</blockquote>
+<blockquote>
+<p>正数 - 在字符串的指定位置开始</p>
+</blockquote>
+<blockquote>
+<p>负数 - 在从字符串结尾开始的指定位置开始</p>
+</blockquote>
+<blockquote>
+<p>0 - 在字符串中的第一个字符处开始</p>
+</blockquote>
+<blockquote>
+<p>length规定被返回字符串的长度。默认是直到字符串的结尾。（可以不写）</p>
+</blockquote>
+<blockquote>
+<p>正数 - 从 start 参数所在的位置返回的长度</p>
+</blockquote>
+<blockquote>
+<p>负数 - 从字符串末端返回的长度</p>
+</blockquote>
+<ol start="4">
+<li>ord() 函数返回字符串中第一个字符的 ASCII 值。</li>
+<li>chr() 函数从指定 ASCII 值返回字符。</li>
+<li>str_rot13() 函数对字符串执行 ROT13 编码，即把每一个字母在字母表中向前移动 13个字母。str_rot13()编码和解码都是由该函数完成，<br><strong>如果把已编码字符串作为参数，则返回原始字符串</strong></li>
+</ol>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：php代码审计</li>
+        <li>Post author：Orange Wang</li>
+        <li>Create time：2023-01-17 10:23:50</li>
+        <li>
+            Post link：https://redefine.ohevan.com/2023/01/17/php代码审计/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/01/15/RCE%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">RCE远程命令执行漏洞</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><span class="nav-text">php代码审计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BUUCTF-ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-BackupFile"><span class="nav-text">1.BUUCTF[ACTF2020 新生赛]BackupFile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">涉及的知识点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb2"><span class="nav-text">2.攻防世界web2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%89%E5%8F%8A%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9-1"><span class="nav-text">涉及的知识点</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+
+
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;<i class="fa-solid fa-heart icon-animate"></i>&nbsp;<a href="/">Orange Wang. All Rights Reserved.</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalviews&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v0.5.2</a>
+        </div>
+        
+        
+        <script async data-pjax defer>
+            function odometer_init(){
+                    let el = document.getElementsByClassName('odometer');
+                    for (i = 0; i < el.length; i++) {
+                        od = new Odometer({
+                            el: el[i],
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    }
+            }
+            odometer_init();
+        </script>
+        <div id="start_time_div" style="display:none">
+            2022/8/17 11:45:14
+        </div>
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fa-solid fa-left-right"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fa-solid fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fa-solid fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fa-solid fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fa-solid fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/runtime.js"></script>
+
+    
+<script src="/js/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/css/odometer-theme-minimal.css">
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/toc-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            REDEFINE.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            REDEFINE.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            REDEFINE.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
