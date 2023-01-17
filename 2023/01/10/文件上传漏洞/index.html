@@ -6,7 +6,7 @@
     <meta name="keywords" content="Hexo Theme Redefine">
     <meta name="description" content="Hexo Theme Redefine">
     <meta name="author" content="Orange Wang">
-    <link rel="canonical" href="http://example.com/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/" />
+    <link rel="canonical" href="http://example.com/2023/01/10/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
@@ -14,7 +14,7 @@
     
     <title>
         
-            http重定向 |
+            文件上传漏洞 |
         
         Orange Wang&#39;s Blog
     </title>
@@ -189,7 +189,7 @@
     <div class="post-page-container">
         <div class="article-content-container">
             <div class="article-title">
-                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">http重定向</h1></span>
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">文件上传漏洞</h1></span>
             </div>
 
             
@@ -208,8 +208,8 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-01-13 19:50:51</span>
-        <span class="mobile">2023-01-13 19:50</span>
+        <span class="pc">2023-01-10 20:22:57</span>
+        <span class="mobile">2023-01-10 20:22</span>
     </span>
     
     
@@ -230,11 +230,48 @@
             
 
             <div class="article-content markdown-body">
-                <h3 id="什么是http重定向"><a href="#什么是http重定向" class="headerlink" title="什么是http重定向"></a>什么是http重定向</h3><p>HTTP中的重定向就是当客户端访问一个服务器不可用的资源后，服务器会返回一个响应包，响应包中带有另一个链接，然后浏览器会自动跳转到另一个链接，无需用户点击，是浏览器自动跳转的。</p>
-<h3 id="重定向原理"><a href="#重定向原理" class="headerlink" title="重定向原理"></a>重定向原理</h3><p>客户端访问了一个不可用的资源，然后服务器返回了一个响应包。<br><strong>响应包有以下特点：</strong><br>1、 status code &#x3D; 3xx，表示这是一个重定向包<br>2、 响应头中有一个location属性，对应的值为需要跳转到的新链接。<br>3、 浏览器自动发起一个http请求访问新链接<br>4、 服务器返回新链接响应的数据，在浏览器中展示</p>
-<h3 id="永久重定向和临时重定向"><a href="#永久重定向和临时重定向" class="headerlink" title="永久重定向和临时重定向"></a>永久重定向和临时重定向</h3><p>status code &#x3D; 301： 永久重定向，搜索引擎或者浏览器会自动将书签、历史记录、搜索引擎对应的记录中旧链接更新为新链接。下次就访问新链接。<br>status code &#x3D; 302： 临时重定向，原来的URL仍然有效，下次还访问旧链接。</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40276626/article/details/120383434" >https://blog.csdn.net/qq_40276626/article/details/120383434 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="ctf-302跳转"><a href="#ctf-302跳转" class="headerlink" title="ctf 302跳转"></a>ctf 302跳转</h2><p>进入题目页面，发现<code>Give me Flag</code>，点击，发现页面未跳转，结合题意，可知发生了302临时跳转，所以我们<code>无法通过浏览器直接访问未跳转的页面</code>，而flag 可能藏在我们目前无法访问的页面之中。所以我们要想办法去<code>访问未跳转的原网站</code>。<br>方法：抓包，右键–&gt;Send to Repeater–&gt;Repeater模块–&gt;Send–&gt;Response部分出现flag </p>
+                <h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><p>文件上传漏洞是指用户上传了一个可执行的脚本文件，并通过此脚本文件获得了执行服务器端命令的能力。一般都是指“上传Web脚本能够被服务器解析”的问题。<br>凡是存在上传文件的地方，都有可能存在文件上传漏洞，并不是说有文件上传就一定有文件上传漏洞。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>这主要看一些文件上传的代码有没有严格限制用户上传的文件类型，比如，只可以上传.jpg或.png或.gif文件，但是由于代码不严谨，或者只在前端验证这个文件的格式等等，造成了攻击者可以上传任意PHP文件，自定义文件。</p>
+<h1 id="查找文件上传点"><a href="#查找文件上传点" class="headerlink" title="查找文件上传点"></a>查找文件上传点</h1><p>黑盒：对方的网站情况，源码我们是不知道的。通过目录扫描获取到文件上传地址，功能查找，看网站有没有文件上传功能，比如会员中心上传头像等等。<br>白盒：有了源码，通过代码分析，本地测试。</p>
+<h1 id="文件上传常见验证"><a href="#文件上传常见验证" class="headerlink" title="文件上传常见验证"></a>文件上传常见验证</h1><ol>
+<li>文件头的验证（文件内容的验证）：属于间接验证，内容头信息，不严谨可通过抓包修改进行欺骗。</li>
+<li>文件类型的验证：属于间接验证：MIME信息，也就是数据包中的content-Type类型，可以抓包修改进行一个欺骗。不严谨。</li>
+<li>后缀名的验证：属于直接验证，黑名单验证和白名单验证。黑名单就是明确不允许上传……文件类型，如：.asp、.php、.jsp、.aspx、.cgi、war文件。当然也得看情况是否支持。白名单就是明确只允许上传……文件，如：.jpg、.png、.gif、zip、rar文件，相对黑名单较安全。</li>
+</ol>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一. 黑名单的绕过</p>
+<ol>
+<li><p>有些黑名单定义的不可上传文件的后缀名不完整，可以用.php5、.phtml、.phps、.pht文件进行上传，从而实现绕过。</p>
+</li>
+<li><p>上传配置文件.htaccess，在这个文件写上代码</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;x.png&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br></pre></td></tr></table></figure></div>
+<p>如果有一个文件的名字是x.png，那么这个png文件就会被当作php文件进行解析，这样也可以实现绕过</p>
+</li>
+<li><p>大小写绕过将.phP文件名后缀大写</p>
+</li>
+<li><p>收尾去空绕过，在后缀名加空格（需要在抓到的数据包中加空格，直接在文件后缀名加空格会命名不成功，它会自动删除空格）</p>
+</li>
+<li><p>不删除末尾的点，在后缀名加点（需要在抓到的数据包中加点，直接在文件后缀名加点会命名不成功，它会自动删除点）</p>
+</li>
+<li><p>没有去除字符串::$DATA。如果文件名+”::$DATA”会把::$DATA之后的数据当成文件流处理,不会检测后缀名。例如：x.php::$DATA,Windows会自动去掉末尾的::$DATA变成x.php,但是这刚好就可以绕过黑名单了。</p>
+</li>
+<li><p>有时没有循环验证，只验证一次，可以使用x.php. .类似的方法进行绕过。（方法不止一种，视情况而定）<br>二.白名单的绕过</p>
+</li>
+<li><p>可以使用%00进行截断。%00只能用于php版本低于5.3的</p>
+</li>
+<li><p>图片马进行绕过</p>
+</li>
+<li><p>条件竞争进行绕过。<br>白名单要配合其他漏洞进行利用。</p>
+</li>
+</ol>
+<p>参考资料：1. <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/chu-jian/p/15553328.html" >https://www.cnblogs.com/chu-jian/p/15553328.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>         2.<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/ma963852/article/details/123085437" >https://blog.csdn.net/ma963852/article/details/123085437 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h1 id="user-ini"><a href="#user-ini" class="headerlink" title=".user.ini"></a>.user.ini</h1><h2 id="什么是-user-ini？"><a href="#什么是-user-ini？" class="headerlink" title="什么是.user.ini？"></a>什么是.user.ini？</h2><p>.user.ini实际上就是一个可以由用户“自定义”的php.ini，而php.ini是php默认的配置文件，其中包括了很多php的配置。<br>我们可以很容易地借助.user.ini文件来构造一个“后门”。</p>
+<p>auto_prepend_file指定一个文件，自动包含在要执行的文件前，类似于在文件前调用了require()函数。而auto_append_file类似，只是在文件后面包含。使用方法很简单，直接写在.user.ini中，如：<br><code>auto_prepend_file=a.jpg</code><br>其中a.jpg是要包含的文件</p>
+<p>所以，我们可以借助.user.ini轻松让所有php文件都“自动”包含某个文件，而这个文件可以是一个正常php文件，也可以是一个包含一句话的webshell。</p>
+<h2 id="在哪些情况下可以用到这个知识？"><a href="#在哪些情况下可以用到这个知识？" class="headerlink" title="在哪些情况下可以用到这个知识？"></a>在哪些情况下可以用到这个知识？</h2><p>比如，某网站限制不允许上传.php文件，你便可以上传一个.user.ini，再上传一个图片马，包含起来进行getshell。不过前提是含有.user.ini的文件夹下需要有正常的php文件，否则也不能包含了。<br>参考资料：<a class="link"   target="_blank" rel="noopener" href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" >https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><ol>
+<li>攻防世界easyupload<br>我的题解：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128606001?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128606001%22,%22source%22:%22orangewangSDU%22%7D" >https://blog.csdn.net/orangewangSDU/article/details/128606001?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128606001%22%2C%22source%22%3A%22orangewangSDU%22%7D <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ol>
+<h1 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h1><h2 id="什么是-htaccess？"><a href="#什么是-htaccess？" class="headerlink" title="什么是.htaccess？"></a>什么是.htaccess？</h2><p>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。<br>.htaccess文件(或者”分布式配置文件”）提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</p>
 
             </div>
 
@@ -242,11 +279,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：http重定向</li>
+        <li>Post title：文件上传漏洞</li>
         <li>Post author：Orange Wang</li>
-        <li>Create time：2023-01-13 19:50:51</li>
+        <li>Create time：2023-01-10 20:22:57</li>
         <li>
-            Post link：https://redefine.ohevan.com/2023/01/13/http重定向/
+            Post link：https://redefine.ohevan.com/2023/01/10/文件上传漏洞/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -265,13 +302,13 @@
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/01/13/zip%E5%92%8Crar%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%AA%E5%8A%A0%E5%AF%86/"
+                            href="/2023/01/13/http%E9%87%8D%E5%AE%9A%E5%90%91/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">zip和rar文件的伪加密</span>
+                                    <span class="post-nav-title-item">http重定向</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
@@ -281,10 +318,10 @@
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/01/10/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"
+                            href="/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">文件上传漏洞</span>
+                                    <span class="post-nav-title-item">一句话木马和Webshell</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -304,7 +341,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFhttp%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">什么是http重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%8E%9F%E7%90%86"><span class="nav-text">重定向原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E4%B8%B4%E6%97%B6%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">永久重定向和临时重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ctf-302%E8%B7%B3%E8%BD%AC"><span class="nav-text">ctf 302跳转</span></a>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-text">文件上传漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%82%B9"><span class="nav-text">查找文件上传点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%B8%B8%E8%A7%81%E9%AA%8C%E8%AF%81"><span class="nav-text">文件上传常见验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#user-ini"><span class="nav-text">.user.ini</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-user-ini%EF%BC%9F"><span class="nav-text">什么是.user.ini？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E4%B8%8B%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%88%B0%E8%BF%99%E4%B8%AA%E7%9F%A5%E8%AF%86%EF%BC%9F"><span class="nav-text">在哪些情况下可以用到这个知识？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#htaccess"><span class="nav-text">.htaccess</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-htaccess%EF%BC%9F"><span class="nav-text">什么是.htaccess？</span></a></li></ol></li></ol>
     </div>
 </div>
             </div>
