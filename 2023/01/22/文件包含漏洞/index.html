@@ -6,7 +6,7 @@
     <meta name="keywords" content="Hexo Theme Redefine">
     <meta name="description" content="Hexo Theme Redefine">
     <meta name="author" content="Orange Wang">
-    <link rel="canonical" href="http://example.com/2022/12/23/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" />
+    <link rel="canonical" href="http://example.com/2023/01/22/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
@@ -14,7 +14,7 @@
     
     <title>
         
-            php伪协议 |
+            文件包含漏洞 |
         
         Orange Wang&#39;s Blog
     </title>
@@ -189,7 +189,7 @@
     <div class="post-page-container">
         <div class="article-content-container">
             <div class="article-title">
-                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">php伪协议</h1></span>
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">文件包含漏洞</h1></span>
             </div>
 
             
@@ -208,8 +208,8 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2022-12-23 18:12:08</span>
-        <span class="mobile">2022-12-23 18:12</span>
+        <span class="pc">2023-01-22 17:36:28</span>
+        <span class="mobile">2023-01-22 17:36</span>
     </span>
     
     
@@ -230,9 +230,17 @@
             
 
             <div class="article-content markdown-body">
-                <p>php伪协议：<br>说明：php内预封装的协议，使用可以绕过一些语法。<br>一、input<br>1.作用：执行命令<br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;input 抓包后，post想运行的语句<br>3.应用场景：文件包含</p>
-<p>二、file<br>1.作用：用于访问服务端本地文件<br>2.使用方式：变量&#x3D;file:&#x2F;&#x2F;文件地址<br>3.应用场景：文件包含</p>
-<p>三、filter<br>1.作用：查看源代码，可以寻找flag，或进行绕过<br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64&#x2F;resourse&#x3D;文件名<br>resource&#x3D;&lt;要过滤的数据流&gt; 这个参数是必须的。它指定了你要筛选过滤的数据流。<br>read&#x3D;&lt;读链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>write&#x3D;&lt;写链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>&lt;；两个链的筛选列表&gt; 任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。<br>3.应用场景：文件包含</p>
+                <h1 id="什么是文件包含漏洞"><a href="#什么是文件包含漏洞" class="headerlink" title="什么是文件包含漏洞"></a>什么是文件包含漏洞</h1><p>文件包含漏洞：即file inclusion，意思是文件包含，是指当服务器开启allow_url_include选项时，就可以通过PHP的某些特性函数（include()，require()和include_once()，requir_once()）利用URL去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了PHP配置中的allow_url_fopen选项，选项开启之后，服务器允许包含一个远程文件，服务器通过PHP特性（函数）去包含任意文件时，由于要包含的这个文件来源过滤不严，从而可以去包含一个恶意文件，而我们可以构造这个恶意文件来达到自己的目的。</p>
+<p>1、文件包含即程序通过包含函数调用本地或远程文件，以此来实现拓展功能<br>2、被包含的文件可以是各种文件格式，而当文件里面包含恶意代码，则会形成远程命令执行或文件上传漏洞。<br>3、文件包含漏洞主要发生在有包含语句的环境中，例如PHP所具备include、require等函数。<br><strong>文件包含分为两类：</strong></p>
+<ol>
+<li>本地文件包含LFI（local file include）当被包含的文件在服务器本地时，就形成本地文件包含</li>
+<li>远程文件包含RFI（remote file include）当被包含的文件在第三方服务器时，叫做远程文件包含。</li>
+</ol>
+<h2 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h2><p>php伪协议：<br>说明：php内预封装的协议，使用可以绕过一些语法。<br>一、php:&#x2F;&#x2F;input<br>1.作用：执行命令，可以访问请求的原始数据的只读流, <strong>将post请求中的数据作为PHP代码执行</strong><br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;input 抓包后，post想运行的语句<br>3.应用场景：文件包含<br>（当遇到正则匹配时GET传参不能出现的敏感字符，可以通过php:&#x2F;&#x2F;input在POST上传最后绕过检测。）<br>二、file<br>1.作用：用于访问服务端本地文件<br>2.使用方式：变量&#x3D;file:&#x2F;&#x2F;文件地址（文件的绝对路径，最完整的，长的）<br>3.应用场景：文件包含<br>三、filter<br>1.作用：查看源代码，可以寻找flag，或进行绕过<br>2.使用方式：变量&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64&#x2F;resourse&#x3D;文件名（会得到用base64编码的内容！）<br>resource&#x3D;&lt;要过滤的数据流&gt; 这个参数是必须的。它指定了你要筛选过滤的数据流。<br>read&#x3D;&lt;读链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>write&#x3D;&lt;写链的筛选列表&gt; 该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br>&lt;；两个链的筛选列表&gt; 任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。<br>3.应用场景：文件包含</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><ol>
+<li>攻防世界fileinclude<br>我的题解：<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128749661?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128749661%22,%22source%22:%22orangewangSDU%22%7D" >https://blog.csdn.net/orangewangSDU/article/details/128749661?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128749661%22%2C%22source%22%3A%22orangewangSDU%22%7D <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>攻防世界fileclude<br>我的题解：<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128749995?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128749995%22,%22source%22:%22orangewangSDU%22%7D" >https://blog.csdn.net/orangewangSDU/article/details/128749995?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128749995%22%2C%22source%22%3A%22orangewangSDU%22%7D <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ol>
 
             </div>
 
@@ -240,11 +248,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：php伪协议</li>
+        <li>Post title：文件包含漏洞</li>
         <li>Post author：Orange Wang</li>
-        <li>Create time：2022-12-23 18:12:08</li>
+        <li>Create time：2023-01-22 17:36:28</li>
         <li>
-            Post link：https://redefine.ohevan.com/2022/12/23/php伪协议/
+            Post link：https://redefine.ohevan.com/2023/01/22/文件包含漏洞/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -260,29 +268,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                            rel="prev"
-                            href="/2022/12/23/XFF%E5%92%8CReferer/"
-                            >
-                                <span class="left arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                </span>
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">XFF和Referer</span>
-                                    <span class="post-nav-item">Prev posts</span>
-                                </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2022/12/23/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%92%E9%99%A4%E6%A0%87%E5%87%86%EF%BC%88robot%20exclusion%20standard)/"
+                            href="/2023/01/17/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">机器人排除标准（robot exclusion standard)</span>
+                                    <span class="post-nav-title-item">php代码审计</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -302,7 +295,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="nav-text">什么是文件包含漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#php%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-text">php伪协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li></ol>
     </div>
 </div>
             </div>
