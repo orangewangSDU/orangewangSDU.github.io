@@ -6,7 +6,7 @@
     <meta name="keywords" content="Hexo Theme Redefine">
     <meta name="description" content="Hexo Theme Redefine">
     <meta name="author" content="Orange Wang">
-    <link rel="canonical" href="http://example.com/2022/12/30/wireshark%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" />
+    <link rel="canonical" href="http://example.com/2023/01/02/%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB%E5%92%8C%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
@@ -14,7 +14,7 @@
     
     <title>
         
-            wireshark流量分析 |
+            文件分离和查看隐藏文件 |
         
         Orange Wang&#39;s Blog
     </title>
@@ -189,7 +189,7 @@
     <div class="post-page-container">
         <div class="article-content-container">
             <div class="article-title">
-                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">wireshark流量分析</h1></span>
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">文件分离和查看隐藏文件</h1></span>
             </div>
 
             
@@ -208,8 +208,8 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2022-12-30 20:17:09</span>
-        <span class="mobile">2022-12-30 20:17</span>
+        <span class="pc">2023-01-02 17:57:44</span>
+        <span class="mobile">2023-01-02 17:57</span>
     </span>
     
     
@@ -230,37 +230,14 @@
             
 
             <div class="article-content markdown-body">
-                <h3 id="数据流的追踪"><a href="#数据流的追踪" class="headerlink" title="数据流的追踪"></a>数据流的追踪</h3><ul>
-<li>我们的一个完整的数据流一般都是由很多个包组成的；</li>
-<li>所以当我们想查看某条数据包对于的数据流的话。可以选中数据，右键选择追踪流；</li>
-<li>里面就会有tcp流、udp流、ssl流、http流。数据包属于哪种流就选择对应的流；</li>
-<li>当我们选择了追踪流时，会弹出该流的完整的数据流还有这个数据流中包含的数据包，对话框下面可以选择数据流方向，顶部的过滤器就是该流的过滤规则</li>
-</ul>
-<h3 id="数据包的统计分析"><a href="#数据包的统计分析" class="headerlink" title="数据包的统计分析"></a>数据包的统计分析</h3><ul>
-<li>统计中的协议分级功能可以查看所选包协议的分布情况，帮助识别可疑协议，和不正常的网络应用程序.</li>
-<li>在Endpoints窗口中，可以通过排序Bytes和Tx Bytes来判断占用带宽最大的主机</li>
-<li>Conversions窗口可以看到两个主机之间发送&#x2F;接收数据包的数量、字节大小以及数据的流向情况，也可以通过排序来判断占用最大带宽的主机；</li>
-<li>在Conversions窗口中只能看到会话的统计情况，无法看到包的具体内容；</li>
-<li>这时可以使用快速过滤会话功能，过滤出想要查看的内容；</li>
-<li>快速过滤会话的功能在Conversions窗口中进行操作，可以对选中的会话或者非选中的会话选择数据流向进行过滤</li>
-</ul>
-<h3 id="数据包的大致结构"><a href="#数据包的大致结构" class="headerlink" title="数据包的大致结构"></a>数据包的大致结构</h3><ul>
-<li>第一行：数据包整体概述</li>
-<li>第二行：链路层详细信息，主要的是双方的mac地址</li>
-<li>第三行：网络层详细信息，主要的是双方的IP地址</li>
-<li>第四行：传输层的详细信息，主要的是双方的端口号</li>
-<li>第五行：TCP或UDP是传输的DATA，DNS这是域名的相关信息</li>
-</ul>
-<p>仅以自己的方式粗略总结，具体描述参见：1.<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116800657" >https://blog.csdn.net/LYJ20010728/article/details/116800657 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>2.<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/loopkep/p/13167281.html" >https://www.cnblogs.com/loopkep/p/13167281.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="提取流量包中的文件"><a href="#提取流量包中的文件" class="headerlink" title="提取流量包中的文件"></a>提取流量包中的文件</h3><ol>
-<li>追踪http流，选中要提取文件的流，<br><strong>wireshark左上角:文件–&gt;导出分组字节流；</strong><br>可导出bin文件,改一下文件后缀也许就可以了……</li>
-<li>找到upload所在包，在MIME Multipart Media Encapsulation右键，显示分组字节<br>设置“显示为原始数据”、选择开始位置后，另存为1.rar即可</li>
-</ol>
-<p>  <strong>（参考：hgame “Where am I”题解）</strong><br>  链接：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128679462?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128679462%22,%22source%22:%22orangewangSDU%22%7D" >https://blog.csdn.net/orangewangSDU/article/details/128679462?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128679462%22%2C%22source%22%3A%22orangewangSDU%22%7D <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><ol>
-<li>攻防世界Ditf<br>又是考察图片宽与高的……<br>用010editor手动<code>改高度</code>，发现字符串，但不是flag;<br>用010发现图片里藏着PK也就是压缩文件，改后缀，解压，发现需要密码。<br>上面的字符串就是密码！<br>解压后得到pcapng流量包文件，用wireshark打开<code>追踪流量</code><br>追踪http流，发现<code>base64编码</code>，解码即得flag!</li>
-<li>攻防世界 流量追踪2<br>我的题解：<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/orangewangSDU/article/details/128753317?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22128753317%22,%22source%22:%22orangewangSDU%22%7D" >https://blog.csdn.net/orangewangSDU/article/details/128753317?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22128753317%22%2C%22source%22%3A%22orangewangSDU%22%7D <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
-</ol>
+                <p>2023.1.2 WP</p>
+<p>新年新气象，跨年打比赛这感觉……<br>装上虚拟机，用用新工具</p>
+<p>题目：攻防世界simple_transfer</p>
+<p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑)</p>
+<h3 id="文件分离"><a href="#文件分离" class="headerlink" title="文件分离"></a>文件分离</h3><p>这里使用的是kali虚拟机，root下的操作……<br>命令：sudo su<br>输入密码即可进入root下！<br><code>foremost 文件名</code><br>（如果有隐藏文件的话会将其分离）</p>
+<h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件<br><code>binwalk 文件名</code><br>如果想顺手操作一下？<br><code>binwalk -e 文件名</code></p>
+<p>分离完出现了一个PDF文件，打开得到了flag</p>
+<p>(不知道出题人怎么想的）</p>
 
             </div>
 
@@ -268,11 +245,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：wireshark流量分析</li>
+        <li>Post title：文件分离和查看隐藏文件</li>
         <li>Post author：Orange Wang</li>
-        <li>Create time：2022-12-30 20:17:09</li>
+        <li>Create time：2023-01-02 17:57:44</li>
         <li>
-            Post link：https://redefine.ohevan.com/2022/12/30/wireshark流量分析/
+            Post link：https://redefine.ohevan.com/2023/01/02/文件分离和查看隐藏文件/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -291,13 +268,13 @@
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/01/02/%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB/"
+                            href="/2023/01/02/%E4%B8%80%E4%BA%9Blinux%E5%91%BD%E4%BB%A4/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">查看隐藏文件和文件分离</span>
+                                    <span class="post-nav-title-item">一些linux命令</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
@@ -307,10 +284,10 @@
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2022/12/29/png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9B%BE%E7%89%87CRC%E7%9B%B8%E5%85%B3/"
+                            href="/2022/12/30/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90wireshark/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">png文件结构及图片CRC相关</span>
+                                    <span class="post-nav-title-item">流量分析wireshark</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -330,7 +307,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E8%BF%BD%E8%B8%AA"><span class="nav-text">数据流的追踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90"><span class="nav-text">数据包的统计分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E7%9A%84%E5%A4%A7%E8%87%B4%E7%BB%93%E6%9E%84"><span class="nav-text">数据包的大致结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%B5%81%E9%87%8F%E5%8C%85%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">提取流量包中的文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%86%E7%A6%BB"><span class="nav-text">文件分离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6"><span class="nav-text">查看隐藏文件</span></a></li></ol>
     </div>
 </div>
             </div>
