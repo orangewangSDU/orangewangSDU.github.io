@@ -235,6 +235,7 @@
 <p>第二行前四位是宽，接下来四位是高。接下来两位分别是图像深度和颜色类型。</p>
 <p>具体内容参照：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/Fiverya/article/details/104126369" >https://blog.csdn.net/Fiverya/article/details/104126369 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>通过CRC可计算图片的宽度与高度，CTF比赛类题目，将一个图片用stegsolve打开，查看CRC,若CRC校验没有错误，但是图片不全，可能是因为<strong>图片的高度和宽度不够</strong>，导致没有完全显示。这时候我们找到文件中表示宽和高的位置进行修改即可。</p>
+<h3 id="jpg文件高度修改"><a href="#jpg文件高度修改" class="headerlink" title="jpg文件高度修改"></a>jpg文件高度修改</h3><p>jpg更改高度的方法为：用winhex打开jpg图片，在标志FFC0之后前四位为长度，然后两位为精度，然后四位为高度，把高度改大就行</p>
 
             </div>
 
@@ -304,7 +305,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-text">png文件结构</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#png%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-text">png文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jpg%E6%96%87%E4%BB%B6%E9%AB%98%E5%BA%A6%E4%BF%AE%E6%94%B9"><span class="nav-text">jpg文件高度修改</span></a></li></ol>
     </div>
 </div>
             </div>

@@ -233,11 +233,11 @@
                 <p>2023.1.2 WP</p>
 <p>新年新气象，跨年打比赛这感觉……<br>装上虚拟机，用用新工具</p>
 <p>题目：攻防世界simple_transfer</p>
-<p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑)</p>
+<p>下载了一个pcap流量包文件<br>用wireshark打开<br>乱的一批，于是进行协议分级<br><code>（协议分级的作用是统计通信流量中不同协议占比的百分比，看谁占比更多）</code><br>对协议进行过滤，并未找到有用信息。<br>看了WP，竟然是文件分离（摸不着头脑）</p>
 <h3 id="文件分离"><a href="#文件分离" class="headerlink" title="文件分离"></a>文件分离</h3><p>这里使用的是kali虚拟机，root下的操作……<br>命令：sudo su<br>输入密码即可进入root下！<br><code>foremost 文件名</code><br>（如果有隐藏文件的话会将其分离）</p>
 <h3 id="查看隐藏文件"><a href="#查看隐藏文件" class="headerlink" title="查看隐藏文件"></a>查看隐藏文件</h3><p>使用文件分离前可以使用binwalk查看是否有隐藏文件<br><code>binwalk 文件名</code><br>如果想顺手操作一下？<br><code>binwalk -e 文件名</code></p>
 <p>分离完出现了一个PDF文件，打开得到了flag</p>
-<p>(不知道出题人怎么想的）</p>
+<p>（不知道出题人怎么想的）</p>
 
             </div>
 
