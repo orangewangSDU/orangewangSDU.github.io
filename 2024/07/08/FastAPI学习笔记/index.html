@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    <meta name="description" content="Hexo Theme Redefine">
+    <meta name="author" content="Orange Wang">
+    <link rel="canonical" href="http://example.com/2024/07/08/FastAPI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
+    <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
+    <link rel="shortcut icon" href="/images/favicon%20of%20my%20blog.jpg">
+    
+    <title>
+        
+            FastAPI学习笔记 |
+        
+        Orange Wang&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/fonts.css">
+
+    
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    <script id="hexo-configurations">
+    let REDEFINE = window.REDEFINE || {};
+    REDEFINE.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    REDEFINE.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#005080","avatar":"/images/favicon of my blog.jpg","favicon":"/images/favicon of my blog.jpg","article_img_align":"center","right_side_width":"210px","content_max_width":"1000px","nav_color":{"left":"#f78736","right":"#367df7","transparency":35},"hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_image":{"light":"https://evan.beee.top/img/wallhaven-wqery6-light.webp","dark":"https://evan.beee.top/img/wallhaven-wqery6-dark.webp"},"title_color":{"light":"#fff","dark":"#d1d1b6"},"description":"Theme Redefine"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":true},"code_block":{"copy":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"0.5.2","friend_links":{"columns":2}};
+    REDEFINE.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+    
+    
+<link rel="stylesheet" href="/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/brands.min.css">
+
+    
+<link rel="stylesheet" href="/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/css/regular.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+    
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Orange Wang&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                            <li class="menu-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="menu-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        ARCHIVES
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                    <li class="drawer-menu-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-menu-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                ARCHIVES
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+            <div class="article-title">
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">FastAPI学习笔记</h1></span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/favicon%20of%20my%20blog.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Orange Wang</span>
+                            
+                                <span class="author-label">lol</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="pc">2024-07-08 20:13:37</span>
+        <span class="mobile">2024-07-08 20:13</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="什么是FastAPI"><a href="#什么是FastAPI" class="headerlink" title="什么是FastAPI"></a>什么是FastAPI</h1><pre><code>FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，使用 Python 并基于标准的 Python 类型提示。
+</code></pre>
+<h1 id="FastAPI的安装"><a href="#FastAPI的安装" class="headerlink" title="FastAPI的安装"></a>FastAPI的安装</h1><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install fastapi</span><br></pre></td></tr></table></figure></div>
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><ol>
+<li>json数据格式</li>
+<li>postman</li>
+</ol>
+<h1 id="测试和功能介绍"><a href="#测试和功能介绍" class="headerlink" title="测试和功能介绍"></a>测试和功能介绍</h1><p>建立main.py,写入如下代码：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入FastAPI</span></span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI </span><br><span class="line"><span class="keyword">import</span> uvicorn</span><br><span class="line"><span class="comment"># 创建app实例</span></span><br><span class="line">app=FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写一个路径操作装饰器</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span><span class="comment">#  “/”表示网页根目录，根据url得到响应信息</span></span><br><span class="line"><span class="comment"># 编写路径操作函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;这是首页&quot;&quot;&quot;</span>        <span class="comment"># 该处注释可显示在交互式文档中</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;This is Home Page457&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加users页</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/users&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取所有的用户&quot;&quot;&quot;</span>  <span class="comment"># 该处注释可显示在交互式文档中</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Get all users&quot;</span>,<span class="string">&quot;code&quot;</span>: <span class="number">278</span>&#125; <span class="comment"># 返回的数据是json类型的数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加projects页</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/projects&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> [<span class="string">&quot;项目1&quot;</span>,<span class="string">&quot;项目2&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    uvicorn.run(app)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<p>然后使用终端开启uvicorn服务：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app (--host 指定ip) (--port 指定端口) --reload</span><br></pre></td></tr></table></figure></div>
+<p>其中：main表示文件main.py的文件名，app表示app&#x3D;FastAPI()语句创建的app对象，–reload可以使代码改变并保存后的呈现效果实时修改。</p>
+<h1 id="FastAPI提供的交互式文档"><a href="#FastAPI提供的交互式文档" class="headerlink" title="FastAPI提供的交互式文档"></a>FastAPI提供的交互式文档</h1><p>· 在浏览器中请求 <a class="link"   target="_blank" rel="noopener" href="http://127.0.0.1:8000/docs" >http://127.0.0.1:8000/docs <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，显示交互式API文档， 自动交互式 API 文档（由 Swagger UI 提供）<br>  此时可以单击某个具体的API，然后单击Try it out，然后填写参数，并单击Execute按钮来执行。.<br>· 在浏览器中请求 <a class="link"   target="_blank" rel="noopener" href="http://127.0.0.1:8000/redoc" >http://127.0.0.1:8000/redoc <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，显示备用API文档， 备用的自动交互式文档（由 ReDoc 提供）<br>  通过ReDoc可以帮助我们生成接口文档</p>
+<h1 id="FastAPI接口文档注释"><a href="#FastAPI接口文档注释" class="headerlink" title="FastAPI接口文档注释"></a>FastAPI接口文档注释</h1><p>· title 标题<br>· description 描述<br>· summary 注释<br>· tags 标签<br>示例：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI(title=<span class="string">&#x27;第一个Fast API应用程序&#x27;</span>, description=<span class="string">&#x27;整体描述&#x27;</span>)</span><br><span class="line"><span class="meta">@app.get(<span class="params">path=<span class="string">&#x27;/&#x27;</span>, summary=<span class="string">&#x27;接口注释&#x27;</span>, description=<span class="string">&#x27;接口描述&#x27;</span>, tags=[<span class="string">&#x27;Root&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_root</span>():    </span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;Hello&quot;</span>: <span class="string">&quot;World&quot;</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="使用FastAPI发送POST请求"><a href="#使用FastAPI发送POST请求" class="headerlink" title="使用FastAPI发送POST请求"></a>使用FastAPI发送POST请求</h1><p>建立py文件，写入代码：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;login success&quot;</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<p>开启uvicorn后，使用postman进行post请求的发送，接收结果进行测试。</p>
+<h1 id="使用FastAPI发送多种请求"><a href="#使用FastAPI发送多种请求" class="headerlink" title="使用FastAPI发送多种请求"></a>使用FastAPI发送多种请求</h1><p>若想让接口支持GET,POST,PUT等多种接口，可以使用api_route()函数<br>示例：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.api_route(<span class="params"><span class="string">&quot;/login&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;PUT&quot;</span>]</span>)  </span><span class="comment">#注意大写</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;login success&quot;</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<h1 id="使用FastAPI获取请求头和请求体参数"><a href="#使用FastAPI获取请求头和请求体参数" class="headerlink" title="使用FastAPI获取请求头和请求体参数"></a>使用FastAPI获取请求头和请求体参数</h1><p>示例：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/user/&#123;id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 变化的参数传入函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;id&quot;</span>: <span class="built_in">id</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<p>若按照以上方式编写，当访问&#x2F;user&#x2F;2时，返回{“id”:”2”};当访问&#x2F;user&#x2F;4时，返回{“id”:”4”}<br>若装饰器写为<code>@app.get(&quot;/user&quot;)</code>,则当访问&#x2F;user?id&#x3D;2时，返回{“id”:”2”};当访问&#x2F;user<br>?id&#x3D;4时，返回{“id”:”4”}</p>
+<p>示例：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Header, Body, Form</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/user&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 通过请求头传递参数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>(<span class="params"><span class="built_in">id</span>, token=Header(<span class="params"><span class="literal">None</span></span>)</span>):  <span class="comment"># 使用了默认参数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;id&quot;</span>: <span class="built_in">id</span>, <span class="string">&quot;token&quot;</span>: token&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 通过请求体传递参数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">username=Form(<span class="params"><span class="literal">None</span></span>), password=Form(<span class="params"><span class="literal">None</span></span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;data&quot;</span>: &#123;<span class="string">&quot;username&quot;</span>: username, <span class="string">&quot;password&quot;</span>: password&#125;&#125;</span><br></pre></td></tr></table></figure></div>
+<p>若请求头中正好有一个叫token的参数（要求与代码中名称一致），则可以被获取，否则默认为None<br>请求体中传递参数主要有两种：传递json数据，传递form表单</p>
+<h1 id="FastAPI定制返回信息"><a href="#FastAPI定制返回信息" class="headerlink" title="FastAPI定制返回信息"></a>FastAPI定制返回信息</h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Header, Body, Form</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse, HTMLResponse, FileResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/user&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 返回JSON</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>():</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(content=&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;get user&quot;</span>&#125;,</span><br><span class="line">                        status_code=<span class="number">202</span>,</span><br><span class="line">                        headers=&#123;<span class="string">&quot;a&quot;</span>: <span class="string">&quot;b&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 返回HTML</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>():</span><br><span class="line">    html_content = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;html&gt;</span></span><br><span class="line"><span class="string">        &lt;body&gt;&lt;p style=&quot;color:red&quot;&gt;Hello world&lt;/p&gt;&lt;/body&gt;</span></span><br><span class="line"><span class="string">    &lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> HTMLResponse(content=html_content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/avatar&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 返回文件（以图片为例）,访问上述网址</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>():</span><br><span class="line">    <span class="comment"># 图片存放在python项目中的static文件夹下</span></span><br><span class="line">    avatar=<span class="string">&#x27;static/qq.jpg&#x27;</span>   </span><br><span class="line">    <span class="comment"># return语句若有filename参数则访问网址可以下载图片，若没有则访问网址可以看到图片</span></span><br><span class="line">    <span class="keyword">return</span> FileResponse(avatar,filename=<span class="string">&quot;qq.jpg&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<h1 id="FastAPI-Jinja2模板返回HTML页面"><a href="#FastAPI-Jinja2模板返回HTML页面" class="headerlink" title="FastAPI Jinja2模板返回HTML页面"></a>FastAPI Jinja2模板返回HTML页面</h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="comment"># 引入模板引擎</span></span><br><span class="line"><span class="keyword">from</span> fastapi.templating <span class="keyword">import</span> Jinja2Templates</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line">template = Jinja2Templates(<span class="string">&quot;pages&quot;</span>)  <span class="comment"># 参数是HTML文档的存放位置,是pages文件夹下</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># 返回HTML，可动态变化的数据为username</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>(<span class="params">username, req: Request</span>):</span><br><span class="line">    <span class="keyword">return</span> template.TemplateResponse(<span class="string">&quot;index.html&quot;</span>, context=&#123;<span class="string">&quot;request&quot;</span>: req, <span class="string">&quot;name&quot;</span>: username&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<p>访问<code>ip:端口号?username=xxx</code>，此时参数username的值会被呈现在html网页中的name处<br><strong>html文件如下：</strong></p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>欢迎来到 FastAPI<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是我们的第很多课<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>用户名：&#123;&#123; name &#125;&#125;    <span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="FastAPI实战应用"><a href="#FastAPI实战应用" class="headerlink" title="FastAPI实战应用"></a>FastAPI实战应用</h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request, Form</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> RedirectResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.templating <span class="keyword">import</span> Jinja2Templates</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line">template = Jinja2Templates(<span class="string">&quot;pages&quot;</span>)  <span class="comment"># 参数是HTML文档的存放位置</span></span><br><span class="line"></span><br><span class="line">todos = [<span class="string">&quot;写日记&quot;</span>, <span class="string">&quot;看电影&quot;</span>, <span class="string">&quot;玩游戏&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">req: Request</span>):</span><br><span class="line">    <span class="comment"># 通过模板引擎在html文件中编写**类似**于python的代码</span></span><br><span class="line">    <span class="keyword">return</span> template.TemplateResponse(<span class="string">&quot;index.html&quot;</span>, context=&#123;<span class="string">&quot;request&quot;</span>: req, <span class="string">&quot;todos&quot;</span>: todos&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/todo&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">todo</span>(<span class="params">todo=Form(<span class="params"><span class="literal">None</span></span>)</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;处理用户发送过来的todolist数据&quot;&quot;&quot;</span></span><br><span class="line">    todos.insert(<span class="number">0</span>,todo)</span><br><span class="line">    <span class="keyword">return</span> RedirectResponse(<span class="string">&quot;/&quot;</span>,status_code=<span class="number">302</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>待办事项<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/todo&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;todo&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请添加待办事项...&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;添加&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    &#123;% for todo in todos %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; todo &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：FastAPI学习笔记</li>
+        <li>Post author：Orange Wang</li>
+        <li>Create time：2024-07-08 20:13:37</li>
+        <li>
+            Post link：https://redefine.ohevan.com/2024/07/08/FastAPI学习笔记/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2024/07/09/sduoj%E5%BC%80%E5%8F%91%E5%9F%B9%E8%AE%AD%E5%A4%A7%E7%BA%B2/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">sduoj开发培训大纲（学习路线）</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/09/06/%E7%94%A8Burpsuite%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">用Burpsuite发送post请求</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFFastAPI"><span class="nav-text">什么是FastAPI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">FastAPI的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%92%8C%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-text">测试和功能介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI%E6%8F%90%E4%BE%9B%E7%9A%84%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%96%87%E6%A1%A3"><span class="nav-text">FastAPI提供的交互式文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A"><span class="nav-text">FastAPI接口文档注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8FastAPI%E5%8F%91%E9%80%81POST%E8%AF%B7%E6%B1%82"><span class="nav-text">使用FastAPI发送POST请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8FastAPI%E5%8F%91%E9%80%81%E5%A4%9A%E7%A7%8D%E8%AF%B7%E6%B1%82"><span class="nav-text">使用FastAPI发送多种请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8FastAPI%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%92%8C%E8%AF%B7%E6%B1%82%E4%BD%93%E5%8F%82%E6%95%B0"><span class="nav-text">使用FastAPI获取请求头和请求体参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI%E5%AE%9A%E5%88%B6%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF"><span class="nav-text">FastAPI定制返回信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI-Jinja2%E6%A8%A1%E6%9D%BF%E8%BF%94%E5%9B%9EHTML%E9%A1%B5%E9%9D%A2"><span class="nav-text">FastAPI Jinja2模板返回HTML页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastAPI%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8"><span class="nav-text">FastAPI实战应用</span></a></li></ol>
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+
+
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;<i class="fa-solid fa-heart icon-animate"></i>&nbsp;<a href="/">Orange Wang. All Rights Reserved.</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalviews&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v0.5.2</a>
+        </div>
+        
+        
+        <script async data-pjax defer>
+            function odometer_init(){
+                    let el = document.getElementsByClassName('odometer');
+                    for (i = 0; i < el.length; i++) {
+                        od = new Odometer({
+                            el: el[i],
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    }
+            }
+            odometer_init();
+        </script>
+        <div id="start_time_div" style="display:none">
+            2022/8/17 11:45:14
+        </div>
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fa-solid fa-left-right"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fa-solid fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fa-solid fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fa-solid fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fa-solid fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/runtime.js"></script>
+
+    
+<script src="/js/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/css/odometer-theme-minimal.css">
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/toc-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            REDEFINE.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            REDEFINE.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            REDEFINE.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

